@@ -60,8 +60,9 @@ public class BankNiftyNotificationTask extends TimerTask {
 				// only check when total oi is greater then 1 lacks
 				if (optionModles.getTotal_ce_oi() > oiLimit || optionModles.getTotal_pe_oi() > oiLimit) {
 
-					MaxPains maxPain = Calculation.calMaxPain(optionModles.getOptionModle(), AppConstant.BNF_STRIKE_DIFF, optionModles.getExpiry());
+					//MaxPains maxPain = Calculation.calMaxPain(optionModles.getOptionModle(), AppConstant.BNF_STRIKE_DIFF, optionModles.getExpiry());
 
+					MaxPains maxPain =null;
 					Double currentMaxPain = maxPain.getMaxPainStrick();
 
 					Double previousMaxPain = BankNiftyData.maxPains.get(expiry);

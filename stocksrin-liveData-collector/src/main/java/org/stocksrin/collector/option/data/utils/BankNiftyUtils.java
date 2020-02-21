@@ -14,8 +14,8 @@ public class BankNiftyUtils {
 	public static OptionModles getBankNiftyOptionData(String expiry) throws Exception {
 
 		OptionModles optionModles = getOptionChain(expiry);	
-		MaxPains maxPain = Calculation.calMaxPain(optionModles.getOptionModle(), AppConstant.BNF_STRIKE_DIFF, optionModles.getExpiry());
-		optionModles.setMaxPainStrick(maxPain.getMaxPainStrick());
+		//MaxPains maxPain = Calculation.calMaxPain(optionModles.getOptionModle(), AppConstant.BNF_STRIKE_DIFF, optionModles.getExpiry());
+		//optionModles.setMaxPainStrick(maxPain.getMaxPainStrick());
 		return optionModles;
 	}
 	

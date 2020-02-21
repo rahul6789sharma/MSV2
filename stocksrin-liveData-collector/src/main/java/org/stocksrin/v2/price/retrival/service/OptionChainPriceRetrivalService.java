@@ -17,6 +17,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.stocksrin.collector.option.data.utils.Calculation;
 import org.stocksrin.common.utils.AppConstant;
 import org.stocksrin.common.utils.CommonUtils;
 import org.stocksrin.common.utils.DateUtils;
@@ -206,7 +207,10 @@ public class OptionChainPriceRetrivalService extends TimerTask {
 	public static void main(String[] args) throws JsonParseException, JsonMappingException, IOException {
 		OptionChainPriceRetrivalService obj = new OptionChainPriceRetrivalService();
 		obj.task("NIFTY");
-		obj.task("BANKNIFTY");
+		
+		OptionModel data=Data.getNiftyData().get(Data.shortedExpiry.get(0));
+		System.out.println( "max pain : " +Calculation.calMaxPain(data,50));
+		//obj.task("BANKNIFTY");
 		// OptionChainPriceRetrivalService.read();
 	}
 }

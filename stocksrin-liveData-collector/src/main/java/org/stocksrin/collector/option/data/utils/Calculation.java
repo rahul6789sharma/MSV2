@@ -5,30 +5,31 @@ import java.util.List;
 
 import org.stocksrin.common.model.option.MaxPain;
 import org.stocksrin.common.model.option.MaxPains;
-import org.stocksrin.common.model.option.OptionModle;
+import org.stocksrin.v2.common.model.option.Datum;
+import org.stocksrin.v2.common.model.option.OptionModel;
 
 public class Calculation {
 	private Calculation() {
 
 	}
 
-	public static MaxPains calMaxPain(List<OptionModle> optionModle, Double strickDiff, String expiry) {
+	public static MaxPains calMaxPain(OptionModel oi, Integer strickDiff) {
 
 		MaxPains maxPains = new MaxPains();
 		List<MaxPain> maxPainList = new ArrayList<>();
+		List<Datum> datums = oi.getDatums();
+		for (int i = 0; i < datums.size(); i++) {
+			Integer strikePrice = datums.get(i).getCE().getStrikePrice();
 
-		for (int i = 0; i < optionModle.size(); i++) {
-			Double strikePrice = optionModle.get(i).getStrike_price();
-
-			Integer ceOI = optionModle.get(i).getC_oi();
-			Integer peOI = optionModle.get(i).getP_oi();
+			Integer ceOI = datums.get(i).getCE().getOpenInterest();
+			Integer peOI = datums.get(i).getPE().getOpenInterest();
 
 			MaxPain maxPain = new MaxPain(strikePrice, ceOI, peOI);
 			Double total;
 
 			Double callCuresult = 0.0;
 			for (int j = 0; j < i; j++) {
-				Integer a1 = optionModle.get(j).getC_oi();
+				Integer a1 = datums.get(j).getCE().getOpenInterest();
 				if (a1 != null) {
 					callCuresult = callCuresult + (a1 * ((strickDiff * i) - (strickDiff * j)));
 					maxPain.setCumulativeCe(callCuresult);
@@ -36,8 +37,8 @@ public class Calculation {
 			}
 
 			Double putCuresult = 0.0;
-			for (int j = i; j < optionModle.size(); j++) {
-				Integer a1 = optionModle.get(j).getP_oi();
+			for (int j = i; j < datums.size(); j++) {
+				Integer a1 = datums.get(j).getPE().getOpenInterest();
 				if (a1 != null) {
 					putCuresult = putCuresult + (a1 * ((strickDiff * j) - (strickDiff * i)));
 					maxPain.setCumulativePe(putCuresult);
@@ -48,21 +49,22 @@ public class Calculation {
 			total = putCuresult + callCuresult;
 			maxPain.setTotal(total);
 			maxPain.setStrickPrice(strikePrice);
-			maxPainList.add(maxPain);
+			//maxPainList.add(maxPain);
+			System.out.println(maxPain);
 
 		}
 
-		maxPains.setDataSet(maxPainList);
-		Double maxPainStrick = findMaxPain(maxPainList);
+		//maxPains.setDataSet(maxPainList);
+		/*Double maxPainStrick = findMaxPain(maxPainList);
 		maxPains.setMaxPainStrick(maxPainStrick);
-		maxPains.setExpiry(expiry);
+		maxPains.setExpiry(expiry);*/
 		return maxPains;
 
 	}
 
-	public static Double findMaxPain(List<MaxPain> maxPainList) {
+	/*public static Integer findMaxPain(List<MaxPain> maxPainList) {
 		Double smallest = maxPainList.get(0).getTotal();
-		Double strickPrice = 0.0;
+		Integer strickPrice = 0;
 		for (MaxPain maxPain : maxPainList) {
 
 			if (smallest > maxPain.getTotal()) {
@@ -71,5 +73,5 @@ public class Calculation {
 			}
 		}
 		return strickPrice;
-	}
+	}*/
 }
