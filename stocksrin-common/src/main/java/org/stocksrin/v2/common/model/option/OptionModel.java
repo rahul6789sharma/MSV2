@@ -12,10 +12,14 @@ public class OptionModel implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	protected String symbole;
+	protected String symbol;
 	private String expiryDate;
 	private String timestamp;
 	private double underlyingValue;
+
+
+	// new field
+	private Integer maxPain;
 
 	// expiry and its future
 	private Map<String, Double> futureValue;
@@ -27,8 +31,16 @@ public class OptionModel implements Serializable {
 	public OptionModel() {
 	}
 
-	public OptionModel(String symbole) {
-		this.symbole = symbole;
+	public Integer getMaxPain() {
+		return maxPain;
+	}
+
+	public void setMaxPain(Integer maxPain) {
+		this.maxPain = maxPain;
+	}
+
+	public OptionModel(String symbol) {
+		this.symbol = symbol;
 	}
 
 	public String getExpiryDate() {
@@ -79,8 +91,8 @@ public class OptionModel implements Serializable {
 		this.datums = datums;
 	}
 
-	public String getSymbole() {
-		return symbole;
+	public String getSymbol() {
+		return symbol;
 	}
 
 	public Map<String, Double> getFutureValue() {
@@ -91,13 +103,13 @@ public class OptionModel implements Serializable {
 		this.futureValue = futureValue;
 	}
 
-	public void setSymbole(String symbole) {
-		this.symbole = symbole;
+	public void setSymbol(String symbol) {
+		this.symbol = symbol;
 	}
 
 	@Override
 	public String toString() {
-		return "OptionModel [symbole=" + symbole + ", expiryDate=" + expiryDate + ", timestamp=" + timestamp
+		return "OptionModel [symbole=" + symbol + ", expiryDate=" + expiryDate + ", timestamp=" + timestamp
 				+ ", underlyingValue=" + underlyingValue + ", dte=" + dte + ", day=" + day + ", datums=" + datums + "]";
 	}
 

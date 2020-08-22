@@ -81,9 +81,9 @@ public class BNFRESTController {
 	}
 
 	@GetMapping("/maxpain/{expiry}")
-	public ResponseEntity<Double> getOptionmaxPain(@PathVariable("expiry") String expiry) {
+	public ResponseEntity<Integer> getOptionmaxPain(@PathVariable("expiry") String expiry) {
 		System.out.println("expiry " + expiry);
-		Double data = BankNiftyData.maxPains.get(expiry);
+		Integer data = BankNiftyData.maxPains.get(expiry);
 		if (data != null) {
 			return ResponseEntity.ok(BankNiftyData.maxPains.get(expiry));
 		} else {

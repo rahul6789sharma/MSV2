@@ -26,7 +26,7 @@ public class BankNiftyData {
 	public static Map<String, Future> future = new ConcurrentHashMap<>();
 
 	// expiry and its maxpain
-	public static Map<String, Double> maxPains = new HashMap<>();
+	public static Map<String, Integer> maxPains = new HashMap<>();
 
 	// new OI Data
 	public static Map<String, List<OptionChainOIData>> oiData = new ConcurrentHashMap<>();

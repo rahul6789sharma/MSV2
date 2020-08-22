@@ -63,9 +63,9 @@ public class BankNiftyNotificationTask extends TimerTask {
 					//MaxPains maxPain = Calculation.calMaxPain(optionModles.getOptionModle(), AppConstant.BNF_STRIKE_DIFF, optionModles.getExpiry());
 
 					MaxPains maxPain =null;
-					Double currentMaxPain = maxPain.getMaxPainStrick();
+					Integer currentMaxPain = maxPain.getMaxPainStrick();
 
-					Double previousMaxPain = BankNiftyData.maxPains.get(expiry);
+					Integer previousMaxPain = BankNiftyData.maxPains.get(expiry);
 
 					if (previousMaxPain != null) {
 

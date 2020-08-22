@@ -1,73 +1,74 @@
 package org.stocksrin.common.model.option;
 
 public class MaxPain {
-	private Integer strickPrice;
-	private Integer ce_oi;
-	private Integer pe_oi;
-	private Double cumulativeCe;
-	private Double cumulativePe;
-	private Double total;
 
-	public MaxPain() {
-	}
+    private Integer strickPrice;
+    private Integer ce_oi;
+    private Integer pe_oi;
+    private Double cumulativeCe;
+    private Double cumulativePe;
+    private Double total;
 
-	public MaxPain(Integer strickPrice, Integer ce_oi, Integer pe_oi) {
-		this.strickPrice = strickPrice;
-		this.ce_oi = ce_oi;
-		this.pe_oi = pe_oi;
-	}
+    public MaxPain() {
+    }
 
-	public Integer getStrickPrice() {
-		return this.strickPrice;
-	}
+    public MaxPain(Integer strickPrice, Integer ce_oi, Integer pe_oi) {
+        this.strickPrice = strickPrice;
+        this.ce_oi = ce_oi;
+        this.pe_oi = pe_oi;
+    }
 
-	public void setStrickPrice(Integer strickPrice) {
-		this.strickPrice = strickPrice;
-	}
+    public Integer getStrickPrice() {
+        return this.strickPrice;
+    }
 
-	public Integer getCe_oi() {
-		return this.ce_oi;
-	}
+    public void setStrickPrice(Integer strickPrice) {
+        this.strickPrice = strickPrice;
+    }
 
-	public void setCe_oi(Integer ce_oi) {
-		this.ce_oi = ce_oi;
-	}
+    public Integer getCe_oi() {
+        return this.ce_oi;
+    }
 
-	public Integer getPe_oi() {
-		return this.pe_oi;
-	}
+    public void setCe_oi(Integer ce_oi) {
+        this.ce_oi = ce_oi;
+    }
 
-	public void setPe_oi(Integer pe_oi) {
-		this.pe_oi = pe_oi;
-	}
+    public Integer getPe_oi() {
+        return this.pe_oi;
+    }
 
-	public Double getCumulativeCe() {
-		return this.cumulativeCe;
-	}
+    public void setPe_oi(Integer pe_oi) {
+        this.pe_oi = pe_oi;
+    }
 
-	public void setCumulativeCe(Double cumulativeCe) {
-		this.cumulativeCe = cumulativeCe;
-	}
+    public Double getCumulativeCe() {
+        return this.cumulativeCe;
+    }
 
-	public Double getCumulativePe() {
-		return this.cumulativePe;
-	}
+    public void setCumulativeCe(Double cumulativeCe) {
+        this.cumulativeCe = cumulativeCe;
+    }
 
-	public void setCumulativePe(Double cumulativePe) {
-		this.cumulativePe = cumulativePe;
-	}
+    public Double getCumulativePe() {
+        return this.cumulativePe;
+    }
 
-	public Double getTotal() {
-		return this.total;
-	}
+    public void setCumulativePe(Double cumulativePe) {
+        this.cumulativePe = cumulativePe;
+    }
 
-	public void setTotal(Double total) {
-		this.total = total;
-	}
+    public Double getTotal() {
+        return this.total;
+    }
 
-	public String toString() {
-		return "MaxPain [strickPrice=" + this.strickPrice + " ce_oi=" + this.ce_oi + " pe_oi=" + this.pe_oi
-				+ " cumulativeCe=" + this.cumulativeCe + " cumulativePe=" + this.cumulativePe + " total=" + this.total
-				+ "]";
-	}
+    public void setTotal(Double total) {
+        this.total = total;
+    }
+
+    public String toString() {
+        return "MaxPain [strickPrice=" + this.strickPrice + " ce_oi=" + this.ce_oi + " pe_oi=" + this.pe_oi
+                + " cumulativeCe=" + this.cumulativeCe + " cumulativePe=" + this.cumulativePe + " total=" + this.total
+                + "]";
+    }
 }

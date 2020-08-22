@@ -6,13 +6,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class StrategyBuilderApplication {
+public class NotificationApplication {
 
-    private static final Logger log = LoggerFactory.getLogger(StrategyBuilderApplication.class);
+    private static final Logger log = LoggerFactory.getLogger(NotificationApplication.class);
     public static boolean status;
 
     public static void main(String[] args) {
-        SpringApplication.run(StrategyBuilderApplication.class, args);
+        SpringApplication.run(NotificationApplication.class, args);
         log.info("******StrategyBuilderApplication Started **********");
         status = true;
     }

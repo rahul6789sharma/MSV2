@@ -76,67 +76,7 @@ public class ExpiryUtils {
 		}
 	}
 
-	public static OptionChainOIData convert(OptionModles optionModles, InstrumentType instrumentType) throws Exception {
-		OptionChainOIData optionChainOIData = new OptionChainOIData();
 
-		String todayDate = DateUtils.dateToString(new Date(), "ddMMMyyyy");
-		optionChainOIData.setDate(todayDate);
-		optionChainOIData.setExpiry(optionModles.getExpiry());
-		optionChainOIData.setSymbole(instrumentType.toString());
-		optionChainOIData.setSpot(optionModles.getSpot());
-		optionChainOIData.setIv(optionModles.getIv());
-
-		optionChainOIData.setTotal_CE_OI(optionModles.getTotal_ce_oi());
-		optionChainOIData.setTotal_PE_OI(optionModles.getTotal_pe_oi());
-		optionChainOIData.setTotal_CE_OI_Change(optionModles.getTotal_ce_oi_change());
-		optionChainOIData.setTotal_PE_OI_change(optionModles.getTotal_pe_oi_change());
-
-		List<OptionModle> celst = optionModles.getOptionModle().stream().filter(i -> i.getC_oi() != null)
-				.sorted((o1, o2) -> o2.getC_oi().compareTo(o1.getC_oi())).collect(Collectors.toList());
-
-		OptionModle ceoptionModle1 = celst.get(0);
-		optionChainOIData.setHigest_CE_OI_1(new Entry(ceoptionModle1.getStrike_price(), ceoptionModle1.getC_oi()));
-
-		OptionModle ceoptionModle2 = celst.get(1);
-		optionChainOIData.setHigest_CE_OI_2(new Entry(ceoptionModle2.getStrike_price(), ceoptionModle2.getC_oi()));
-
-		List<OptionModle> pelst = optionModles.getOptionModle().stream().filter(i -> i.getP_oi() != null)
-				.sorted((o1, o2) -> o2.getP_oi().compareTo(o1.getP_oi())).collect(Collectors.toList());
-
-		OptionModle peoptionModle1 = pelst.get(0);
-		optionChainOIData.setHigest_PE_OI_1(new Entry(peoptionModle1.getStrike_price(), peoptionModle1.getP_oi()));
-
-		OptionModle peoptionModle2 = pelst.get(1);
-		optionChainOIData.setHigest_PE_OI_2(new Entry(peoptionModle2.getStrike_price(), peoptionModle2.getP_oi()));
-
-		// change in oi
-
-		List<OptionModle> celstoichange = optionModles.getOptionModle().stream().filter(i -> i.getC_change_oi() != null)
-				.sorted((o1, o2) -> o2.getC_change_oi().compareTo(o1.getC_change_oi())).collect(Collectors.toList());
-
-		OptionModle ceoptionModle1Change = celstoichange.get(0);
-		optionChainOIData.setHigest_CE_OI_1_change(
-				new Entry(ceoptionModle1Change.getStrike_price(), ceoptionModle1Change.getC_change_oi()));
-
-		OptionModle ceoptionModle2Change = celstoichange.get(1);
-		optionChainOIData.setHigest_CE_OI_2_change(
-				new Entry(ceoptionModle2Change.getStrike_price(), ceoptionModle2Change.getC_change_oi()));
-
-		List<OptionModle> pelstoichange = optionModles.getOptionModle().stream().filter(i -> i.getP_change_oi() != null)
-				.sorted((o1, o2) -> o2.getP_change_oi().compareTo(o1.getP_change_oi())).collect(Collectors.toList());
-
-		OptionModle peoptionModle1Change = pelstoichange.get(0);
-		optionChainOIData.setHigest_PE_OI_1_change(
-				new Entry(peoptionModle1Change.getStrike_price(), peoptionModle1Change.getP_change_oi()));
-
-		OptionModle peoptionModle2Change = pelstoichange.get(1);
-		optionChainOIData.setHigest_PE_OI_2_change(
-				new Entry(peoptionModle2Change.getStrike_price(), peoptionModle2Change.getP_change_oi()));
-
-		premiumDecay(optionModles, optionModles.getAtmStrike(), optionChainOIData, instrumentType);
-
-		return optionChainOIData;
-	}
 
 	// need to take fix atmStrike in morning
 	private static void premiumDecay(OptionModles optionModles, double atmStrike, OptionChainOIData optionChainOIData,

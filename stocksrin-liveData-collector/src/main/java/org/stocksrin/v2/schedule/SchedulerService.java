@@ -11,7 +11,7 @@ import org.stocksrin.v2.arbitrage.ArbitrageTask2;
 import org.stocksrin.v2.download.OptionChainDailyDownloader;
 import org.stocksrin.v2.download.OptionChainDownloader2;
 import org.stocksrin.v2.download.ParticapentFnoDataDownloaderTask;
-import org.stocksrin.v2.price.retrival.service.OptionChainPriceRetrivalService;
+import org.stocksrin.v2.price.retrival.service.OptionChainPriceRetrivalTask;
 import org.stocksrin.v2.ss.SSTask;
 
 @Service
@@ -36,7 +36,7 @@ public class SchedulerService {
 		log.info("################# SchedulerService started #################");
 		try {
 			// new boz we nned new instance daily
-			Scheduler.scheduleTask(9, 17, new OptionChainPriceRetrivalService(false));
+			Scheduler.scheduleTask(9, 17, new OptionChainPriceRetrivalTask(false));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -71,7 +71,8 @@ public class SchedulerService {
 
 		try {
 			// for evening data update 5 pm
-			Scheduler.scheduleTask(18, 0, new OptionChainPriceRetrivalService(true));
+			// fetch option chain in evening
+			Scheduler.scheduleTask(18, 0, new OptionChainPriceRetrivalTask(true));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

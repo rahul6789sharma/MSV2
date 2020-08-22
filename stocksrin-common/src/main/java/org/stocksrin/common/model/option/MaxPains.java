@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MaxPains {
+
 	private String expiry;
 	private String symbol;
-	private Double maxPainStrick;
+	private Integer maxPainStrick;
+
 	private List<MaxPain> dataSet = new ArrayList();
 
 	public String getExpiry() {
@@ -33,11 +35,11 @@ public class MaxPains {
 		this.dataSet = dataSet;
 	}
 
-	public Double getMaxPainStrick() {
+	public Integer getMaxPainStrick() {
 		return this.maxPainStrick;
 	}
 
-	public void setMaxPainStrick(Double maxPainStrick) {
+	public void setMaxPainStrick(Integer maxPainStrick) {
 		this.maxPainStrick = maxPainStrick;
 	}
 

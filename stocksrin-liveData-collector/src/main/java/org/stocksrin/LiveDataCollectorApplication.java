@@ -27,7 +27,7 @@ public class LiveDataCollectorApplication {
 				if (!Data.shortedExpiry.isEmpty()) {
 					status = true;
 				}
-				Thread.sleep(1000);
+				Thread.sleep(10000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

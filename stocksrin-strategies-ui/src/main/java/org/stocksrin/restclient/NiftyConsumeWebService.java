@@ -14,6 +14,7 @@ import org.stocksrin.common.utils.ComparatorBasedOnDate;
 
 @Controller
 public class NiftyConsumeWebService {
+
 	@Autowired
 	private Environment env;
 

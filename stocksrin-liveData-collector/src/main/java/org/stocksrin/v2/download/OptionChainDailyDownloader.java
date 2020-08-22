@@ -14,7 +14,7 @@ import org.stocksrin.common.utils.NSEHolidayUtils;
 import org.stocksrin.email.SendEmail;
 import org.stocksrin.v2.common.model.option.OptionModel;
 import org.stocksrin.v2.data.Data;
-import org.stocksrin.v2.price.retrival.service.OptionChainPriceRetrivalService;
+import org.stocksrin.v2.price.retrival.service.OptionChainPriceRetrivalTask;
 
 @Service
 public class OptionChainDailyDownloader extends TimerTask {
@@ -101,7 +101,7 @@ public class OptionChainDailyDownloader extends TimerTask {
 
 	public static void main(String[] args) {
 
-		OptionChainPriceRetrivalService obj = new OptionChainPriceRetrivalService(true);
+		OptionChainPriceRetrivalTask obj = new OptionChainPriceRetrivalTask(true);
 		obj.update("NIFTY");
 		obj.update("BANKNIFTY");
 

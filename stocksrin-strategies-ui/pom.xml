@@ -5,7 +5,7 @@
 	<groupId>org.stocksrin</groupId>
 	<artifactId>stocksrin-strategies-ui</artifactId>
 	<version>1.0</version>
-	<name>Options APIs Service</name>
+	<name>StocksRIin UI</name>
 	<description>Options related microService</description>
 
 	<parent>

@@ -5,7 +5,7 @@
 	<groupId>org.stocksrin</groupId>
 	<artifactId>stocksrin-liveData-collector</artifactId>
 	<version>1.0</version>
-	<name>Options APIs Service</name>
+	<name>StocskRin Live Data</name>
 	<description>Options related microService</description>
 
 	<parent>

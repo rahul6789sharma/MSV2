@@ -11,7 +11,7 @@ public class IntraDayOptionModel extends OptionModel {
 	private static final long serialVersionUID = 1L;
 
 	public IntraDayOptionModel(String symbole) {
-		super.symbole = symbole;
+		super.symbol = symbole;
 	}
 
 	private String intradayData;
