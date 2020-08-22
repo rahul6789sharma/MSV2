@@ -18,7 +18,8 @@ public class FutureRetrivalService {
 	private static RestTemplate restTemplate = new RestTemplate();
 
 	public static void main(String[] args) {
-		task("SBIN");
+		Future future =task("NIFTY");
+		System.out.println(future.getUnderlyingValue());
 	}
 
 	public static Future task(String symbole) {
@@ -54,7 +55,8 @@ public class FutureRetrivalService {
 			List<Stock> futureStocks = new ArrayList<>();
 			for (Stock stock : stocks) {
 				Metadata m = stock.getMetadata();
-				if ("Stock Futures".equals(m.getInstrumentType())) {
+				// for stocks it will be Stocks Future
+				if ("Index Futures".equals(m.getInstrumentType())) {
 					futureStocks.add(stock);
 				}
 			}

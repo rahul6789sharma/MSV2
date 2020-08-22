@@ -95,6 +95,13 @@ public class DateUtils {
 		cal.add(2, previousMonth);
 		return format.format(cal.getTime());
 	}
+	
+	public static String getPreviousMonth(int previousMonth, String formate) {
+		SimpleDateFormat format = new SimpleDateFormat(formate);
+		Calendar cal = Calendar.getInstance();
+		cal.add(2, previousMonth);
+		return format.format(cal.getTime());
+	}
 
 	public static String getNextMonth(int month) {
 		SimpleDateFormat format = new SimpleDateFormat("MMM");

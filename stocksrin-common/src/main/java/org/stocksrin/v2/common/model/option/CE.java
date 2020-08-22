@@ -14,48 +14,68 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({ "strikePrice", "expiryDate", "underlying", "identifier", "openInterest", "changeinOpenInterest", "pchangeinOpenInterest", "totalTradedVolume", "impliedVolatility", "lastPrice",
-		"change", "pChange", "totalBuyQuantity", "totalSellQuantity", "bidQty", "bidprice", "askQty", "askPrice", "underlyingValue" })
+@JsonPropertyOrder({ "strikePrice", "expiryDate", "underlying", "identifier", "openInterest", "changeinOpenInterest",
+		"pchangeinOpenInterest", "totalTradedVolume", "impliedVolatility", "lastPrice", "change", "pChange",
+		"totalBuyQuantity", "totalSellQuantity", "bidQty", "bidprice", "askQty", "askPrice", "underlyingValue" })
 public class CE {
 
 	@JsonProperty("strikePrice")
 	private Integer strikePrice;
+	
 	@JsonProperty("expiryDate")
 	private String expiryDate;
+	
 	@JsonProperty("underlying")
 	private String underlying;
+	
 	@JsonProperty("identifier")
 	private String identifier;
+	
 	@JsonProperty("openInterest")
 	private Integer openInterest;
+	
 	@JsonProperty("changeinOpenInterest")
 	private Integer changeinOpenInterest;
+	
 	@JsonProperty("pchangeinOpenInterest")
 	private Double pchangeinOpenInterest;
+	
 	@JsonProperty("totalTradedVolume")
 	private Integer totalTradedVolume;
+	
 	@JsonProperty("impliedVolatility")
 	private Double impliedVolatility;
+	
 	@JsonProperty("lastPrice")
 	private Double lastPrice;
+	
 	@JsonProperty("change")
 	private Double change;
+	
 	@JsonProperty("pChange")
 	private Integer pChange;
+	
 	@JsonProperty("totalBuyQuantity")
 	private Integer totalBuyQuantity;
+	
 	@JsonProperty("totalSellQuantity")
 	private Integer totalSellQuantity;
+	
 	@JsonProperty("bidQty")
 	private Integer bidQty;
+	
 	@JsonProperty("bidprice")
 	private Double bidprice;
+	
 	@JsonProperty("askQty")
 	private Integer askQty;
+	
 	@JsonProperty("askPrice")
 	private Double askPrice;
+	
 	@JsonProperty("underlyingValue")
 	private Double underlyingValue;
+	
 	@JsonIgnore
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
@@ -366,9 +386,11 @@ public class CE {
 
 	@Override
 	public int hashCode() {
-		return new HashCodeBuilder().append(strikePrice).append(expiryDate).append(underlying).append(identifier).append(openInterest).append(changeinOpenInterest).append(pchangeinOpenInterest)
-				.append(totalTradedVolume).append(impliedVolatility).append(lastPrice).append(change).append(pChange).append(totalBuyQuantity).append(totalSellQuantity).append(bidQty).append(bidprice)
-				.append(askQty).append(askPrice).append(underlyingValue).append(additionalProperties).toHashCode();
+		return new HashCodeBuilder().append(strikePrice).append(expiryDate).append(underlying).append(identifier)
+				.append(openInterest).append(changeinOpenInterest).append(pchangeinOpenInterest)
+				.append(totalTradedVolume).append(impliedVolatility).append(lastPrice).append(change).append(pChange)
+				.append(totalBuyQuantity).append(totalSellQuantity).append(bidQty).append(bidprice).append(askQty)
+				.append(askPrice).append(underlyingValue).append(additionalProperties).toHashCode();
 	}
 
 	@Override
@@ -380,11 +402,16 @@ public class CE {
 			return false;
 		}
 		CE rhs = ((CE) other);
-		return new EqualsBuilder().append(strikePrice, rhs.strikePrice).append(expiryDate, rhs.expiryDate).append(underlying, rhs.underlying).append(identifier, rhs.identifier)
-				.append(openInterest, rhs.openInterest).append(changeinOpenInterest, rhs.changeinOpenInterest).append(pchangeinOpenInterest, rhs.pchangeinOpenInterest)
-				.append(totalTradedVolume, rhs.totalTradedVolume).append(impliedVolatility, rhs.impliedVolatility).append(lastPrice, rhs.lastPrice).append(change, rhs.change)
-				.append(pChange, rhs.pChange).append(totalBuyQuantity, rhs.totalBuyQuantity).append(totalSellQuantity, rhs.totalSellQuantity).append(bidQty, rhs.bidQty).append(bidprice, rhs.bidprice)
-				.append(askQty, rhs.askQty).append(askPrice, rhs.askPrice).append(underlyingValue, rhs.underlyingValue).append(additionalProperties, rhs.additionalProperties).isEquals();
+		return new EqualsBuilder().append(strikePrice, rhs.strikePrice).append(expiryDate, rhs.expiryDate)
+				.append(underlying, rhs.underlying).append(identifier, rhs.identifier)
+				.append(openInterest, rhs.openInterest).append(changeinOpenInterest, rhs.changeinOpenInterest)
+				.append(pchangeinOpenInterest, rhs.pchangeinOpenInterest)
+				.append(totalTradedVolume, rhs.totalTradedVolume).append(impliedVolatility, rhs.impliedVolatility)
+				.append(lastPrice, rhs.lastPrice).append(change, rhs.change).append(pChange, rhs.pChange)
+				.append(totalBuyQuantity, rhs.totalBuyQuantity).append(totalSellQuantity, rhs.totalSellQuantity)
+				.append(bidQty, rhs.bidQty).append(bidprice, rhs.bidprice).append(askQty, rhs.askQty)
+				.append(askPrice, rhs.askPrice).append(underlyingValue, rhs.underlyingValue)
+				.append(additionalProperties, rhs.additionalProperties).isEquals();
 	}
 
 }

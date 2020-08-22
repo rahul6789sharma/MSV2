@@ -7,15 +7,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
 
-import org.stocksrin.LiveDataCollectorApplication;
 import org.stocksrin.collector.option.data.PriceUtils;
-import org.stocksrin.common.data.BankNiftyData;
 import org.stocksrin.common.data.NiftyData;
 import org.stocksrin.common.model.OptionChainOIData;
 import org.stocksrin.common.utils.AppConstant;
 import org.stocksrin.common.utils.DateUtils;
 import org.stocksrin.common.utils.FileUtils;
-import org.stocksrin.participant.oidata.Util;
 
 public class DataLoaderOnStartUP {
 
@@ -34,8 +31,7 @@ public class DataLoaderOnStartUP {
 			SortedSet<String> shortedExpiry = NiftyData.shortedExpiry;
 
 			List<String> expiries1 = new ArrayList<>(shortedExpiry);
-			loadData(expiries1, AppConstant.STOCKSRIN_OPTION_CHAIN_NIFTY, NiftyData.oiData);
-			loadData(expiries1, AppConstant.STOCKSRIN_OPTION_CHAIN_BNF, BankNiftyData.oiData);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -68,7 +64,7 @@ public class DataLoaderOnStartUP {
 			System.out.println(files);
 			if (files != null) {
 				for (String string : files) {
-					Util.collectAllDateForDay(dir + File.separator + string);
+					//Util.collectAllDateForDay(dir + File.separator + string);
 				}
 			}
 

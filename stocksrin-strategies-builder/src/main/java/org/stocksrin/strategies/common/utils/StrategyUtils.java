@@ -50,6 +50,7 @@ public class StrategyUtils {
 		strategyModel.setStopLoss(-target);
 		strategyModel.setDes("Automated Trade");
 		strategyModel.setSpot_close(spotPrice);
+		strategyModel.setUnderlying_ltp(spotPrice);
 		if (optionModle.getPE().getImpliedVolatility() != null) {
 			strategyModel.setTraded_IV(optionModle.getPE().getImpliedVolatility());
 		}
@@ -69,6 +70,7 @@ public class StrategyUtils {
 		strategyModel.setAvgPrice(optionModle.getCE().getLastPrice());
 		strategyModel.setQuantity(qnt);
 		strategyModel.setSpot_close(spotPrice);
+		strategyModel.setUnderlying_ltp(spotPrice);
 		strategyModel.setTarget(target);
 		strategyModel.setStopLoss(-target);
 		strategyModel.setDes("Automated Trade");

@@ -13,6 +13,8 @@ public class Strategy {
 	private String dataUpdatedAt;
 	private String tradeDate;
 	private String tradeDay;
+	
+	private String tradedTime;
 
 	// define positive amount only
 	private double stopLoss;
@@ -275,6 +277,14 @@ public class Strategy {
 
 	public void setPnlList(LinkedHashMap<String, Integer> pnlList) {
 		this.pnlList = pnlList;
+	}
+
+	public String getTradedTime() {
+		return tradedTime;
+	}
+
+	public void setTradedTime(String tradedTime) {
+		this.tradedTime = tradedTime;
 	}
 
 	public String toString() {

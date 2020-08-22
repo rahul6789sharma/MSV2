@@ -94,6 +94,7 @@ public class FileUtils {
 		}
 		return null;
 	}
+
 	public static OptionModel fromJson3(String file) throws Exception {
 		ObjectMapper mapper = new ObjectMapper();
 
@@ -216,7 +217,8 @@ public class FileUtils {
 			throw new RuntimeException(fileName + " File not exist");
 		}
 
-		try (FileWriter fw = new FileWriter(file.getAbsoluteFile(), true); BufferedWriter bw = new BufferedWriter(fw);) {
+		try (FileWriter fw = new FileWriter(file.getAbsoluteFile(), true);
+				BufferedWriter bw = new BufferedWriter(fw);) {
 
 			bw.write(data + "\n");
 
@@ -283,6 +285,7 @@ public class FileUtils {
 			status = true;
 
 		} catch (IOException e) {
+			FileUtils.delete(toFile);
 			throw new Exception("ERROR ! downloadBhavCopy, url " + url + " , Error Msg: " + e.getMessage());
 		} finally {
 			try {
@@ -293,6 +296,9 @@ public class FileUtils {
 			} catch (IOException e) {
 				throw new Exception("ERROR ! downloadBhavCopy " + e.getMessage());
 			}
+		}
+		if (!status) {
+			FileUtils.delete(toFile);
 		}
 		return status;
 	}
@@ -367,5 +373,6 @@ public class FileUtils {
 		return file.exists();
 	}
 
-	private static String[] months = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
+	private static String[] months = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov",
+			"Dec" };
 }

@@ -14,7 +14,9 @@ public class AppConstant {
 
 	public static final String EXPIRY = "Expiry";
 	public static final String SECONDSESSIOON = "Eve";
-	public static final String NSE_FO_OI_ALLPARTICAPENT = "https://www.nseindia.com/content/nsccl/";
+	
+	public static final String NSE_FO_OI_ALLPARTICAPENT = "https://www1.nseindia.com/content/nsccl/";
+	
 	public static final String FII_DATA_URL = "https://www.nseindia.com/products/dynaContent/equities/equities/htms/fiiEQ.htm";
 	public static final String DII_DATA_URL = "https://www.nseindia.com/products/dynaContent/equities/equities/htms/DiiEQ.htm";
 	public static final String BANKNIFTY_WEEKLY_OPTION_URL = "https://www.nseindia.com/live_market/dynaContent/live_watch/option_chain/optionKeys.jsp?symbolCode=-9999&symbol=BANKNIFTY&symbol=BANKNIFTY&instrument=-&date=-&segmentLink=17&symbolCount=2&segmentLink=17";
@@ -34,8 +36,8 @@ public class AppConstant {
 	public static double NF_STRIKE_DIFF = 50.0D;
 
 	public static final String STOCKSRIN_OPTION_CHAIN = STOCKSRIN_NSE_CONF_DIR + "OptionChain" + File.separator;
-	public static final String STOCKSRIN_OPTION_CHAIN_NIFTY = STOCKSRIN_NSE_CONF_DIR + "OptionChain" + File.separator + "Nifty" + File.separator;
-	public static final String STOCKSRIN_OPTION_CHAIN_BNF = STOCKSRIN_NSE_CONF_DIR + "OptionChain" + File.separator + "BNF" + File.separator;
+	public static final String STOCKSRIN_OPTION_CHAIN_NIFTY_EOD = STOCKSRIN_NSE_CONF_DIR + "OptionChain" + File.separator + "Nifty" + File.separator;
+	public static final String STOCKSRIN_OPTION_CHAIN_BNF_EOD = STOCKSRIN_NSE_CONF_DIR + "OptionChain" + File.separator + "BNF" + File.separator;
 
 	public static final String STOCKSRIN_OPTION_DATA_DIR = STOCKSRIN_NSE_CONF_DIR + "OptionData" + File.separator;
 	public static final String STOCKSRIN_OPTION_DATA_DIR_NIFTY = STOCKSRIN_NSE_CONF_DIR + "OptionData" + File.separator + "Nifty" + File.separator;
@@ -75,7 +77,10 @@ public class AppConstant {
 
 	public static final String STOCKSRIN_STRATEGY_DIR_IntraDay_BNF = STOCKSRIN_NSE_CONF_DIR + "Strategies" + File.separator + "IntraDay" + File.separator + "BNF" + File.separator;
 	public static final String STOCKSRIN_STRATEGY_DIR_IntraDay_NIFTY = STOCKSRIN_NSE_CONF_DIR + "Strategies" + File.separator + "IntraDay" + File.separator + "Nifty" + File.separator;
+	
+	public static final String STOCKSRIN_STRATEGY_DIR_BackTesting_NIFTY = STOCKSRIN_NSE_CONF_DIR + "Strategies" + File.separator + "BackTesting" + File.separator + "Nifty" + File.separator;
 
+	
 	public static final String STOCKSRIN_STRATEGY_DIR_IntraDay_BNF_V2 = STOCKSRIN_NSE_CONF_DIR + "Strategies" + File.separator + "IntraDay" + File.separator + "BNF_V2";
 	public static final String STOCKSRIN_STRATEGY_DIR_IntraDay_NIFTY_V2 = STOCKSRIN_NSE_CONF_DIR + "Strategies" + File.separator + "IntraDay" + File.separator + "Nifty_V2";
 

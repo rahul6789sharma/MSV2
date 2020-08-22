@@ -17,9 +17,12 @@ import org.stocksrin.common.utils.DateUtils;
 
 public class SendEmail {
 	private static boolean sendEmail = true;
-	private static String toMail = "stocksrin2@gmail.com";
+	private static String toMail = "rahul6789sharma@gmail.com";
 	static String hostName;
 
+	public static void main(String[] args) {
+		sentMailimp("Test", "Body", "name");
+	}
 	static {
 		try {
 			hostName = InetAddress.getLocalHost().getHostName();
@@ -35,7 +38,7 @@ public class SendEmail {
 	}
 
 	public static void sentMail(String subject, String body, String msName) {
-		if (hostName.contains("BLRDL-PC0W67KX")) {
+		if (hostName.contains("LAPTOP-0QEL1245")) {
 			// dont send events
 			return;
 		}

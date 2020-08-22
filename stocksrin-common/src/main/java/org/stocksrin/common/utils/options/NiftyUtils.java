@@ -12,9 +12,9 @@ public class NiftyUtils {
 	public static OptionModles getNiftyOptionData(String expiry) throws Exception {
 
 		OptionModles optionModles = NiftyUtils.getOptionChain(expiry);
-		MaxPains maxPain = Calculation.calMaxPain(optionModles.getOptionModle(), AppConstant.NF_STRIKE_DIFF,
-				optionModles.getExpiry());
-		optionModles.setMaxPainStrick(maxPain.getMaxPainStrick());
+		/*MaxPains maxPain = Calculation.calMaxPain(optionModles.getOptionModle(), AppConstant.NF_STRIKE_DIFF,
+				optionModles.getExpiry());*/
+		//optionModles.setMaxPainStrick(maxPain.getMaxPainStrick());
 		return optionModles;
 
 	}

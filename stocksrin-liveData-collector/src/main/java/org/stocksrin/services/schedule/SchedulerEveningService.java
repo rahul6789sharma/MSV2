@@ -5,7 +5,6 @@ import javax.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.stocksrin.ai.AIWriterTask;
 import org.stocksrin.collector.option.data.LiveDataCollectortask;
 import org.stocksrin.collector.option.data.LiveDataEveningUpdatedTask;
@@ -17,8 +16,6 @@ import org.stocksrin.intraday.OptionChainDownloader;
 import org.stocksrin.notifications.BankNiftyNotificationTask;
 import org.stocksrin.notifications.NiftyNotificationTask;
 import org.stocksrin.option.data.store.NiftyOptionDataDownloader;
-import org.stocksrin.option.downloader.ChainDataFetcheture;
-import org.stocksrin.participant.oidata.ParticipantOIReaderTask;
 
 //@Service
 public class SchedulerEveningService {
@@ -29,12 +26,6 @@ public class SchedulerEveningService {
 
 	@Autowired
 	private LiveIndicicesCollector liveIndicicesCollector;
-
-	@Autowired
-	private ParticipantOIReaderTask participantOIReaderTask;
-
-	@Autowired
-	private ChainDataFetcheture expiryDatesUtils;
 
 	@Autowired
 	private IntraDataCollector intraDataCollector;
@@ -98,7 +89,7 @@ public class SchedulerEveningService {
 		}
 
 		try {
-			//Scheduler.scheduleTask(19, 10, niftyOptionDataDownloader);
+			// Scheduler.scheduleTask(19, 10, niftyOptionDataDownloader);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -129,18 +120,6 @@ public class SchedulerEveningService {
 
 		try {
 			Scheduler.scheduleTask(15, 30, new AIWriterTask());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		try {
-			Scheduler.scheduleTask(20, 30, participantOIReaderTask);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		try {
-			Scheduler.scheduleTask(17, 30, expiryDatesUtils);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

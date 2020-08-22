@@ -11,8 +11,10 @@ import org.stocksrin.v2.common.model.future.EntityABR;
 import org.stocksrin.v2.common.model.future.Stock;
 import org.stocksrin.v2.common.model.option.CE;
 import org.stocksrin.v2.common.model.option.Datum;
+import org.stocksrin.v2.common.model.option.IntraDayOptionModel;
 import org.stocksrin.v2.common.model.option.OptionModel;
 import org.stocksrin.v2.common.model.option.PE;
+import org.stocksrin.v2.common.model.option.SSEntity;
 
 public class Data {
 
@@ -25,11 +27,14 @@ public class Data {
 
 	// all expiry data
 	private static Map<String, OptionModel> niftyData = new ConcurrentHashMap<>();
-	public static List<OptionModel> niftyIntraDay = new ArrayList<>();
+	public static List<IntraDayOptionModel> niftyIntraDay = new ArrayList<>();
 
 	// all expiry data
 	private static Map<String, OptionModel> bnfData = new ConcurrentHashMap<>();
 	// public static List<OptionModel> bnfIntraDay = new ArrayList<>();
+
+	//
+	public static List<SSEntity> ssEntitys = new ArrayList<>();
 
 	public static synchronized Map<String, OptionModel> getNiftyData() {
 		return niftyData;
@@ -60,7 +65,8 @@ public class Data {
 	}
 
 	// intraDay Data
-	public static double getLtp(Map<String, OptionModel> Indexdata, Integer strike, OptionType optionType, String expiry) {
+	public static double getLtp(Map<String, OptionModel> Indexdata, Integer strike, OptionType optionType,
+			String expiry) {
 		OptionModel data = Indexdata.get(expiry);
 		double ltp = 0.0;
 		if (data != null && expiry.equals(data.getExpiryDate())) {
@@ -89,7 +95,9 @@ public class Data {
 	public static double getNFSpot() {
 		if (!shortedExpiry.isEmpty()) {
 			OptionModel data = niftyData.get(shortedExpiry.get(0));
-			return data.getUnderlyingValue();
+			if (data != null) {
+				return data.getUnderlyingValue();
+			}
 		}
 		return 0;
 	}
@@ -97,7 +105,9 @@ public class Data {
 	public static double getBNFSpot() {
 		if (!shortedExpiry.isEmpty()) {
 			OptionModel data = bnfData.get(shortedExpiry.get(0));
-			return data.getUnderlyingValue();
+			if (data != null) {
+				return data.getUnderlyingValue();
+			}
 		}
 		return 0;
 	}
@@ -105,7 +115,9 @@ public class Data {
 	public static String getNiftyLastUpdatedTimestamp() {
 		if (!shortedExpiry.isEmpty()) {
 			OptionModel data = niftyData.get(shortedExpiry.get(0));
-			return data.getTimestamp();
+			if (data != null) {
+				return data.getTimestamp();
+			}
 		}
 		return "NaN";
 	}
@@ -113,7 +125,9 @@ public class Data {
 	public static String getBNFLastUpdatedTimestamp() {
 		if (!shortedExpiry.isEmpty()) {
 			OptionModel data = bnfData.get(shortedExpiry.get(0));
-			return data.getTimestamp();
+			if (data != null) {
+				return data.getTimestamp();
+			}
 		}
 		return "NaN";
 	}
@@ -123,6 +137,14 @@ public class Data {
 		niftyData.clear();
 		niftyIntraDay.clear();
 		bnfData.clear();
+	}
+
+	public List<SSEntity> getSsEntitys() {
+		return ssEntitys;
+	}
+
+	public void setSsEntitys(List<SSEntity> ssEntitys) {
+		this.ssEntitys = ssEntitys;
 	}
 
 }

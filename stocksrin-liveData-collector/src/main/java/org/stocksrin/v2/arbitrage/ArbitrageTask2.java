@@ -25,7 +25,7 @@ public class ArbitrageTask2 extends TimerTask {
 			while (CommonUtils.getEveningTime()) {
 
 				for (String string : stocks) {
-					System.out.println("Symbole: " + string);
+					//System.out.println("Symbole: " + string);
 					FutureArbitrage2.futurePrice(string, 0); // current expiry
 					// FutureArbitrage2.futurePrice(string, 1); // next expiry
 				}

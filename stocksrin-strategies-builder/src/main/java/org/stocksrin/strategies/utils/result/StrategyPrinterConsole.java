@@ -22,10 +22,13 @@ public class StrategyPrinterConsole {
 		String todayDate = null;
 		String todayDay = null;
 		try {
-			tradedDay = DateUtils.getDayFromDate(strategy.getTradeDate(), "dd-MMM-yyyy");
-			Date dataupdatedDate = DateUtils.stringToDate(strategy.getDataUpdatedAt().split(" ")[0], "dd-MMM-yyyy");
-			todayDate = DateUtils.dateToString(dataupdatedDate, "dd-MMM-yyyy");
-			todayDay = DateUtils.getDayFromDate(todayDate, "dd-MMM-yyyy");
+			if (strategy.getTradeDate() != null) {
+				tradedDay = DateUtils.getDayFromDate(strategy.getTradeDate(), "dd-MMM-yyyy");
+				Date dataupdatedDate = DateUtils.stringToDate(strategy.getDataUpdatedAt().split(" ")[0], "dd-MMM-yyyy");
+				todayDate = DateUtils.dateToString(dataupdatedDate, "dd-MMM-yyyy");
+				todayDay = DateUtils.getDayFromDate(todayDate, "dd-MMM-yyyy");
+			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -35,16 +38,21 @@ public class StrategyPrinterConsole {
 
 		StringBuilder result = new StringBuilder();
 		result.append("\n");
-		result.append(strategy.getUnderlying() + ": " + strategy.getStrategyName() + " updated at " + strategy.getDataUpdatedAt());
+		result.append(strategy.getUnderlying() + ": " + strategy.getStrategyName() + " updated at "
+				+ strategy.getDataUpdatedAt());
 		result.append("\n");
 		result.append(line);
 		result.append("\n");
-		result.append("Trade Date: " + strategy.getTradeDate() + " (" + tradedDay + "), Traded Price:  " + strategy.getTradeSpotPrice() + ", DTE: " + strategy.getDte() + "\n");
-		result.append("Status  At: " + strategy.getDataUpdatedAt() + " (" + todayDay + "), Current Price: " + strategy.getUnderlying_ltp() + " [" + diff + "] Diff from Trade");
+		result.append("Trade Date: " + strategy.getTradeDate() + " (" + tradedDay + "), Traded Price:  "
+				+ strategy.getTradeSpotPrice() + ", DTE: " + strategy.getDte() + "\n");
+		result.append("Status  At: " + strategy.getDataUpdatedAt() + " (" + todayDay + "), Current Price: "
+				+ strategy.getUnderlying_ltp() + " [" + diff + "] Diff from Trade");
 		result.append("\n");
 		result.append(line);
 		result.append("\n");
-		result.append("Type       Expiry     Strike   Qty   AvgPrice   ltp    change    P&L    tradeIV   currentIV   IVDiff" + "\n");
+		result.append(
+				"Type       Expiry     Strike   Qty   AvgPrice   ltp    change    P&L    tradeIV   currentIV   IVDiff"
+						+ "\n");
 		result.append(line + "\n");
 
 		double totalPremiumRecived = 0;
@@ -68,20 +76,29 @@ public class StrategyPrinterConsole {
 
 			double ivdiff = strategyModel.getCurrent_IV() - strategyModel.getTraded_IV();
 
-			result.append(type + "   " + addZero(strategyModel.getExpiry()) + "   " + ((int) strategyModel.getStrike()) + "   " + signFormate.format(strategyModel.getQuantity()) + "   "
-					+ foramteTradedPrice(df.format(strategyModel.getAvgPrice())) + "   " + foramteTradedPrice(df.format(strategyModel.getLtp())) + "    " + signFormate.format(change) + "    "
-					+ foramtePL(pl) + "     " + strategyModel.getTraded_IV() + "     " + strategyModel.getCurrent_IV() + "    " + df.format(ivdiff));
+			result.append(type + "   " + addZero(strategyModel.getExpiry()) + "   " + ((int) strategyModel.getStrike())
+					+ "   " + signFormate.format(strategyModel.getQuantity()) + "   "
+					+ foramteTradedPrice(df.format(strategyModel.getAvgPrice())) + "   "
+					+ foramteTradedPrice(df.format(strategyModel.getLtp())) + "    " + signFormate.format(change)
+					+ "    " + foramtePL(pl) + "     " + strategyModel.getTraded_IV() + "     "
+					+ strategyModel.getCurrent_IV() + "    " + df.format(ivdiff));
 			result.append("\n");
 
 		}
 		result.append(line + "\n");
-		result.append("Points :                         [" + (int) totalPremiumRecived + "]   [" + (int) currentPremiumRecived + "]    [" + (int) (currentPremiumRecived - totalPremiumRecived) + "]");
+		result.append("Points :                         [" + (int) totalPremiumRecived + "]   ["
+				+ (int) currentPremiumRecived + "]    [" + (int) (currentPremiumRecived - totalPremiumRecived) + "]");
 		result.append("\n" + line + "\n");
-		result.append("Total PL : [" + df.format(totalPL) + "],    At Spot: [" + strategy.getUnderlying_ltp() + "] moved : [" + (diff) + "] - " + strategy.getDataUpdatedAt() + "\n");
-		result.append("Min PL " + " :  [" + df.format(strategy.getTotalPLMin()) + "],    At Spot: [" + strategy.getTotalPLMinSpot() + "] moved : ["
-				+ df.format(strategy.getTotalPLMinSpot() - strategy.getTradeSpotPrice()) + "] - " + strategy.getTotalPLMinTime() + "\n");
-		result.append("Max PL " + " :  [" + df.format(strategy.getTotalPLMax()) + "],    At Spot: [" + strategy.getTotalPLMaxSpot() + "] moved : ["
-				+ df.format(strategy.getTotalPLMaxSpot() - strategy.getTradeSpotPrice()) + "] - " + strategy.getTotalPLMaxTime() + "\n");
+		result.append("Total PL : [" + df.format(totalPL) + "],    At Spot: [" + strategy.getUnderlying_ltp()
+				+ "] moved : [" + (diff) + "] - " + strategy.getDataUpdatedAt() + "\n");
+		result.append("Min PL " + " :  [" + df.format(strategy.getTotalPLMin()) + "],    At Spot: ["
+				+ strategy.getTotalPLMinSpot() + "] moved : ["
+				+ df.format(strategy.getTotalPLMinSpot() - strategy.getTradeSpotPrice()) + "] - "
+				+ strategy.getTotalPLMinTime() + "\n");
+		result.append("Max PL " + " :  [" + df.format(strategy.getTotalPLMax()) + "],    At Spot: ["
+				+ strategy.getTotalPLMaxSpot() + "] moved : ["
+				+ df.format(strategy.getTotalPLMaxSpot() - strategy.getTradeSpotPrice()) + "] - "
+				+ strategy.getTotalPLMaxTime() + "\n");
 		result.append(line + "\n");
 
 		/*

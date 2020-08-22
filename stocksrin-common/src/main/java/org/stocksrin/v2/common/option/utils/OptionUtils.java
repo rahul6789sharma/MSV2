@@ -54,40 +54,56 @@ public class OptionUtils {
 				if (optionModle.getStrikePrice() != null) {
 					double value = optionModle.getStrikePrice();
 					if (value == one) {
-						if (optionModle.getCE().getLastPrice() != null && optionModle.getPE().getLastPrice() != null) {
-							double diff = Math.abs(optionModle.getCE().getLastPrice() - optionModle.getPE().getLastPrice());
+
+						if (optionModle.getCE() != null && optionModle.getPE() != null
+								&& optionModle.getCE().getLastPrice() != null
+								&& optionModle.getPE().getLastPrice() != null) {
+							double diff = Math
+									.abs(optionModle.getCE().getLastPrice() - optionModle.getPE().getLastPrice());
 							premiumDiff.add(diff);
 							oneStrike = optionModle.getStrikePrice();
 						}
 
 					} else if (value == two) {
 
-						if (optionModle.getCE().getLastPrice() != null && optionModle.getPE().getLastPrice() != null) {
-							double diff = Math.abs(optionModle.getCE().getLastPrice() - optionModle.getPE().getLastPrice());
+						if (optionModle.getCE() != null && optionModle.getPE() != null
+								&& optionModle.getCE().getLastPrice() != null
+								&& optionModle.getPE().getLastPrice() != null) {
+							double diff = Math
+									.abs(optionModle.getCE().getLastPrice() - optionModle.getPE().getLastPrice());
 							premiumDiff.add(diff);
 							twoStrike = optionModle.getStrikePrice();
 						}
 
 					} else if (value == round) {
 
-						if (optionModle.getCE().getLastPrice() != null && optionModle.getPE().getLastPrice() != null) {
-							double diff = Math.abs(optionModle.getCE().getLastPrice() - optionModle.getPE().getLastPrice());
+						if (optionModle.getCE() != null && optionModle.getPE() != null
+								&& optionModle.getCE().getLastPrice() != null
+								&& optionModle.getPE().getLastPrice() != null) {
+							double diff = Math
+									.abs(optionModle.getCE().getLastPrice() - optionModle.getPE().getLastPrice());
 							premiumDiff.add(diff);
 							threeStrike = optionModle.getStrikePrice();
 						}
 
 					} else if (value == four) {
 
-						if (optionModle.getCE().getLastPrice() != null && optionModle.getPE().getLastPrice() != null) {
-							double diff = Math.abs(optionModle.getCE().getLastPrice() - optionModle.getPE().getLastPrice());
+						if (optionModle.getCE() != null && optionModle.getPE() != null
+								&& optionModle.getCE().getLastPrice() != null
+								&& optionModle.getPE().getLastPrice() != null) {
+							double diff = Math
+									.abs(optionModle.getCE().getLastPrice() - optionModle.getPE().getLastPrice());
 							premiumDiff.add(diff);
 							foureStrike = optionModle.getStrikePrice();
 						}
 
 					} else if (value == five) {
 
-						if (optionModle.getCE().getLastPrice() != null && optionModle.getPE().getLastPrice() != null) {
-							double diff = Math.abs(optionModle.getCE().getLastPrice() - optionModle.getPE().getLastPrice());
+						if (optionModle.getCE() != null && optionModle.getPE() != null
+								&& optionModle.getCE().getLastPrice() != null
+								&& optionModle.getPE().getLastPrice() != null) {
+							double diff = Math
+									.abs(optionModle.getCE().getLastPrice() - optionModle.getPE().getLastPrice());
 							premiumDiff.add(diff);
 							fiveStrike = optionModle.getStrikePrice();
 						}

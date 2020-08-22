@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en" style="min-height: 100%;">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="canonical" href="https://www.stocksrin.com" />
+<meta property="og:site_name" content="www.stocksrin.com" />
+<meta property="og:type" content="website" />
+<meta name="author" content="stocksrin.com">
+<link rel="alternate" hreflang="x-default"
+	href="https://www.stocksrin.com" />
+<link rel="alternate" hreflang="en" href="https://www.stocksrin.com" />
+<meta property="og:locale" content="en_IN" />
+
+
+<title>Smart Options Trading | NSE : Indian Stock Market
+	Knowledge | Options Trading</title>
+
+<meta name="keywords"
+	content="stocksrin, Indian Stock Maket, NSE ,NIFTY Options,Nifty Option Chain, Currency Options, Option Chain, USDINR , Options Trading, Option Geeks, NIFTY Option Geeks,
+		NIFTY Delta,Futures & options, F&O, F&O Quote, BSE, NSE, Nifty " />
+<meta name="description" content="Options Chain for NIFTY" />
+<link rel="canonical" href="https://www.stocksrin.com" />
+
+
+<meta name="robots" content="index, follow">
+<!-- Bootstrap Core CSS -->
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet">
+<link rel="shortcut icon" href="images/stocksRin.ico">
+
+<script src="js/bl/bl.js" type="text/javascript"></script>
+<script src="js/bl/gaussian.js" type="text/javascript"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.4.11/d3.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.1/nv.d3.min.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.1/nv.d3.min.css">
+<meta name="google-site-verification"
+	content="RiMM3DplmIgwoDQbESmxiQeM8vPKaqAmUu2UkG6Hq0U" />
+
+<meta http-equiv="refresh" content="500" />
+</head>
+
+<script async
+	src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+	(adsbygoogle = window.adsbygoogle || []).push({
+		google_ad_client : "ca-pub-7270583781006956",
+		enable_page_level_ads : true
+	});
+</script>
+
+
+<body ng-app="">
+
+	<div class="container-fluid main-content"
+		style="padding-right: 0; padding-left: 0;">
+
+		<div class="banner include-nav" style="background-color: #34495e;">
+
+			<div ng-include="'pages/header.htm'"></div>
+
+		</div>
+
+
+		<!--center-->
+		<div class="col-xs-12 col-sm-12  col-md-12">
+			<div id="mainTableDivIntraDay" class="row"></div>
+		
+			<div id="mainTableDiv" class="row"></div>
+
+		</div>
+
+
+	</div>
+
+
+	<footer class="container-fluid text-center"
+		style="background-color: #101010; margin-top: 10px;">
+		<div ng-include="'pages/footer.html'"></div>
+	</footer>
+
+
+	<!-- Bootstrap Core JavaScript -->
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.js"></script>
+	<script src="js/angular.min.js"></script>
+	<script src="js/my.js"></script>
+
+
+</body>
+<script>
+	$(document).ready(function() {
+		query();
+		//queryIntraDay();
+
+	});
+
+	function query() {
+
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+
+			if (this.readyState == 4 && this.status == 200) {
+				var jsonResponse = JSON.parse(this.responseText);
+				//console.log(jsonResponse);
+				createDivFrmData(jsonResponse)
+				addData(jsonResponse, "sdTable");
+			}
+		};
+		xhttp.open("GET", "/dbStrategyRestController/intadayStrategies", true);
+		xhttp.send();
+	}
+
+	function createDivFrmData(jsonResponse) {
+		var keyArr = Object.keys(jsonResponse);
+		for (var i = 0; i < keyArr.length; i++) {
+			createDiv(i);
+			createPLTable(i);
+		}
+	}
+
+	function addData(jsonResponse, tableID) {
+		var keyArr = Object.keys(jsonResponse);
+		console.log(keyArr);
+		
+		for (var i = 0; i < keyArr.length; i++) {
+			addDataToStrategyTable(jsonResponse[keyArr[i]], tableID + i);
+		}
+	}
+
+	function addDataToStrategyTable(strategy, tableID) {
+		var trades = strategy.trades
+		var keyArr = Object.keys(trades);
+
+		var totalPremium = 0;
+		var totalPremiumLtp = 0;
+		var totalPl = 0;
+		var totalChange = 0;
+
+		var tradeTime;
+		var tradeDay;
+		var symbole;
+		var tr;
+		for (var i = 0; i < trades.length; i++) {
+		
+			var trade = trades[keyArr[i]];
+			symbole=trade.symbole;
+			tradeDay=trade.tradeDay;
+			tradeTime=trade.tradeTime;
+			console.log(trade)
+			tr = $('<tr/>');
+			tr.append("<td class=oddRow>" + trade.tradeType + "</td>");
+			tr.append("<td class=evenRow>" + trade.quantity + "</td>");
+			
+			    tr.append("<td class=oddRow>" + trade.derivativeTrade.strike + " : "  + trade.derivativeTrade.optionType +"</td>");
+				tr.append("<td class=oddRow>" + trade.derivativeTrade.expiry + "</td>");
+				tr.append("<td class=oddRow>" + trade.tradedPrice.toFixed(2) + "</td>");
+				tr.append("<td class=evenRow>" + trade.ltp + "</td>");
+		
+			
+			
+			if(trade.tradeType == "OPTION"){
+				var change = trade.ltp - trade.tradedPrice;
+				tr.append("<td class=oddRow>" + change.toFixed(1) + "</td>");
+				var pl = trade.quantity * change;
+				var totalPlFinal = parseInt(pl);
+				
+				if (totalPlFinal > 0) {
+					tr.append("<td  class=positiveValue>" + totalPlFinal.toFixed(1) + "</td>");
+				} else {
+					tr.append("<td  class=negitiveValue>" + totalPlFinal.toFixed(1) + "</td>");
+				}
+
+				
+			} else if (trade.tradeType == "FUTURE"){
+				var change = trade.futureTrade.futureLTP - trade.futureTrade.futureTradedPrice;
+				tr.append("<td class=oddRow>" + change.toFixed(1) + "</td>");
+				var pl = trade.quantity * change;
+				var totalPlFinal = parseInt(pl);
+				
+				if (totalPlFinal > 0) {
+					tr.append("<td  class=positiveValue>" + totalPlFinal.toFixed(1) + "</td>");
+				} else {
+					tr.append("<td  class=negitiveValue>" + totalPlFinal.toFixed(1) + "</td>");
+				}
+				
+			}
+			$('#' + tableID).append(tr);
+		}
+		
+		tr = $('<tr/>');
+		tr.append("<td class=highLightRow title=Total  colspan=7>" + "Total"+ "</td>");
+		tr.append("<td class=highLightRow title=Total>"+ strategy.totalPL.toFixed(2) + "</td>");
+		$('#' + tableID).append(tr);
+		
+		
+		tr = $('<tr/>');
+		tr.append("<td class=highLightRow2 title=Total  colspan=8>"+ "Traded At  [ " + strategy.tradedDay + " ]  &nbsp &nbsp &nbsp  [ "
+				+ strategy.tradedPrice + " ]&nbsp &nbsp &nbsp ["+ strategy.tradedTime +"]  </td>");
+
+		$('#' + tableID).append(tr);
+		
+		
+		
+		tr = $('<tr/>');
+		tr.append("<td class=highLightRow2 title=Total  colspan=8 align=left>"
+				+ "Min PL &nbsp : &nbsp [ "
+				+ (strategy.totalPLMin).toFixed(0)
+				+ " ] &nbsp &nbsp &nbsp  [ "
+				+ strategy.totalPLMinSpot
+				+ " ] Diff [ "
+				+ (strategy.totalPLMinSpot - strategy.tradedPrice)
+						.toFixed(1) + " ] " + "-" + strategy.totalPLMinTime);
+
+		$('#' + tableID).append(tr);
+
+		tr = $('<tr/>');
+		tr.append("<td class=highLightRow2 title=Total  colspan=8 align=left>"
+				+ "Max PL &nbsp : &nbsp [ "
+				+ (strategy.totalPLMax).toFixed(0)
+				+ " ] &nbsp &nbsp &nbsp  [ "
+				+ strategy.totalPLMaxSpot
+				+ " ] Diff [ "
+				+ (strategy.totalPLMaxSpot - strategy.tradedPrice)
+						.toFixed(1) + " ] " + "-" + strategy.totalPLMaxTime);
+
+		$('#' + tableID).append(tr);
+		
+		var currentSpotDiff= (strategy.ltp - strategy.tradedPrice)
+		//header
+		var table = document.getElementById(tableID);
+		var header = table.createTHead();
+		var row = header.insertRow(0);
+		row.setAttribute("class", "optionHead");
+		
+		var cell = row.insertCell(0);
+		cell.innerHTML = "<b>" + symbole + "</b>";
+		
+		var cell1 = row.insertCell(1);
+		cell1.setAttribute("colspan", "5");
+		cell1.innerHTML = "<b>" + strategy.name + "</b>";
+		
+		var cell2 = row.insertCell(2);
+		cell2.setAttribute("colspan", "2");
+		cell2.innerHTML = "<b>" + "Diff: " +  currentSpotDiff.toFixed(2) + "</b>";
+
+	}
+
+	function getITMOTM(strike, underlying_ltp, type) {
+		var result = "ITM";
+		if (type == "CALL") {
+			if (strike < underlying_ltp) {
+				result = "ITM"
+			} else {
+				result = "OTM"
+			}
+
+		} else if (type == "PUT") {
+			if (strike > underlying_ltp) {
+				result = "ITM"
+			} else {
+				result = "OTM"
+			}
+		}
+		return result;
+	}
+
+	function getExtensricValue(strike, underlying_ltp, optionLtp, type) {
+		var extrinsic = 0;
+
+		if (type == "CALL") {
+			// ITM
+			if (strike < underlying_ltp) {
+				var fairprice = (underlying_ltp - strike);
+				extrinsic = (optionLtp - fairprice).toFixed(2)
+			} else {
+				extrinsic = optionLtp;
+			}
+		} else if (type == "PUT") {
+			if (strike > underlying_ltp) {
+				var fairprice = (strike - underlying_ltp);
+				extrinsic = (optionLtp - fairprice).toFixed(2)
+			} else {
+				extrinsic = optionLtp;
+			}
+		}
+		return extrinsic
+	}
+
+	function createDiv(index) {
+		var x = document.createElement("DIV");
+		x.setAttribute("id", "sdDiv" + index);
+		x.setAttribute("class", "col-xs-10 col-sm-10 col-md-6");
+		$("#mainTableDiv").append(x);
+
+		var y = document.createElement("hr");
+		$("#sdDiv" + index).append(y);
+	}
+	
+	function createPLTable(index) {
+		var x = document.createElement("TABLE");
+		x.setAttribute("id", "sdTable" + index);
+		x.setAttribute("class", "table-striped");
+		x.setAttribute("align", "center");
+		x.setAttribute("cellpadding", "40");
+		x.setAttribute("cellspacing", "2");
+		x.setAttribute("width", "80%");
+
+		$("#sdDiv" + index).append(x);
+		// table header
+		$("#sdTable" + index)
+				.append(
+						'<thead>'
+								/* + '<tr class="optionHead"><th colspan="6" class=whiteRightBorder> Previous Months </th> <th colspan="4" > NSE  </th></tr>' */
+
+								+ '<tr class="optionHead">'
+
+								+ ' <th title="buyValue">TradeType</th> <th title="SellValue"> Qty </th> <th title="buyValue">Symbole</th>  <th title="buyValue"> Expiry </th>  ' 
+								+ '<th title="net" class=whiteRightBorder > Entry Price</th> '
+								+ '<th title="buyValue">Current Price</th> <th title="SellValue"> Change </th><th title="net" class=whiteRightBorder > P&L</th>'
+
+								+ '</tr>' + '</thead>');
+
+		// table Fotter 
+	}
+
+</script>
+
+</html>

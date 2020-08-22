@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.stocksrin.v2.common.model.option.OptionModel;
-import org.stocksrin.v2.utils.json.OptionChainJosnReader;
+import org.stocksrin.v2.common.option.utils.IntraDayOptionChainJosnReader;
 
 @RestController
 @RequestMapping("/optionChainService")
@@ -19,7 +19,7 @@ public class OptionChainRestController {
 		@RequestMapping("/optionChain")
 		public ResponseEntity<List<OptionModel>> getNiftyExpiryDayChain(@RequestParam("expiry") String expiry, @RequestParam("date") String date) throws Exception {
 			
-			List<OptionModel> o = OptionChainJosnReader.getNiftyOptionChain(expiry,date);
+			List<OptionModel> o = IntraDayOptionChainJosnReader.getNiftyOptionChain(expiry,date, false);
 			if (o == null) {
 				ResponseEntity.status(HttpStatus.NO_CONTENT);
 			}

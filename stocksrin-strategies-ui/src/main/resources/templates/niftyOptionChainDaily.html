@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en" style="min-height: 100%;">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="canonical" href="https://www.stocksrin.com" />
+<meta property="og:site_name" content="www.stocksrin.com" />
+<meta property="og:type" content="website" />
+<meta name="author" content="stocksrin.com">
+<link rel="alternate" hreflang="x-default"
+	href="https://www.stocksrin.com" />
+<link rel="alternate" hreflang="en" href="https://www.stocksrin.com" />
+<meta property="og:locale" content="en_IN" />
+
+
+<title>Smart Options Trading | NSE : Indian Stock Market
+	Knowledge | Options Trading</title>
+
+<meta name="keywords"
+	content="stocksrin, Indian Stock Maket, NSE ,NIFTY Options,Nifty Option Chain, Currency Options, Option Chain, USDINR , Options Trading, Option Geeks, NIFTY Option Geeks,
+		NIFTY Delta,Futures & options, F&O, F&O Quote, BSE, NSE, Nifty " />
+<meta name="description" content="Options Chain for NIFTY" />
+<link rel="canonical" href="https://www.stocksrin.com" />
+
+
+<meta name="robots" content="index, follow">
+<!-- Bootstrap Core CSS -->
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet">
+<link rel="shortcut icon" href="images/stocksRin.ico">
+
+<script src="js/bl/bl.js" type="text/javascript"></script>
+<script src="js/bl/gaussian.js" type="text/javascript"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.4.11/d3.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.1/nv.d3.min.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.1/nv.d3.min.css">
+<meta name="google-site-verification"
+	content="RiMM3DplmIgwoDQbESmxiQeM8vPKaqAmUu2UkG6Hq0U" />
+</head>
+
+<script async
+	src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+	(adsbygoogle = window.adsbygoogle || []).push({
+		google_ad_client : "ca-pub-7270583781006956",
+		enable_page_level_ads : true
+	});
+</script>
+
+
+<body ng-app="">
+
+	<div class="container-fluid main-content"
+		style="padding-right: 0; padding-left: 0;">
+		
+		<div class="banner include-nav" style="background-color: #34495e;">
+			<div ng-include="'pages/header.htm'"></div>
+		</div>
+
+		<!--center-->
+		<div class="col-xs-12 col-sm-6 col-md-6">
+			Expiry : <input type="date" id="expiry" >  
+			&nbsp; 
+			Date : <input type="date" id="date" >
+			&nbsp; 
+			<button onclick="loadData()"> Load </button>
+			<div id="mainTableDiv">
+			</div>		
+		</div>
+		
+		<div class="col-xs-12 col-sm-6 col-md-6">
+			<div id="totalOIDivMain"></div>	
+			<div id="changeOIDivMain"></div>				
+		</div>
+		<hr>
+		<div ng-include="'pages/add.html'"></div>
+	</div>
+
+
+	<footer class="container-fluid text-center"
+		style="background-color: #101010; margin-top: 10px;">
+		<div ng-include="'pages/footer.html'"></div>
+	</footer>
+
+
+	<!-- Bootstrap Core JavaScript -->
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.js"></script>
+	<script src="js/angular.min.js"></script>
+	<script src="js/my.js"></script>
+
+
+</body>
+
+
+<script>
+
+var monthNames = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+];
+
+function convertDate(x){
+	var res = x.split("-");
+   var singeldate=res[2];
+  
+   var date =  singeldate+"-"+monthNames[parseInt(res[1])]+"-"+res[0]
+   return date;
+}
+
+function loadData() {
+
+  var x = document.getElementById("expiry").value;
+  var expiryDate=convertDate(x);
+  console.log(expiryDate);
+  var y = document.getElementById("date").value;
+  var selectedDate=convertDate(y);
+  console.log(selectedDate);
+  
+  var expirySelecteddate = localStorage.getItem("expirySelecteddate");
+ 
+  
+  if(expirySelecteddate == null){
+	expirySelecteddate = expiryDate;
+  }
+  
+  var selectedDateStore = localStorage.getItem("selectedDateStore");
+  
+   if(selectedDateStore == null){
+	selectedDateStore = selectedDate;
+  }
+   localStorage.setItem("selectedDateStore", selectedDate);
+  localStorage.setItem("expirySelecteddate", expiryDate);
+  
+  window.location.reload();
+ 
+}
+
+	$(document).ready(function() {
+		query()
+	});
+	
+	function query() {
+
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+
+			if (this.readyState == 4 && this.status == 200) {
+				
+				if(this.responseText){
+					var jsonResponse = JSON.parse(this.responseText);
+				    createDivFrmData(jsonResponse);
+				}else{
+					console.log("NO data Found")
+				}
+				
+			}
+		};
+		var selectedDate = localStorage.getItem("selectedDateStore");
+		var expirySelecteddate = localStorage.getItem("expirySelecteddate");
+		console.log(expirySelecteddate)
+		var url ="/optionChainRestController/optionChain?expiry="+expirySelecteddate+"&date="+selectedDate;
+		console.log(url);
+		xhttp.open("GET", url, true);
+		xhttp.send();
+	}
+	
+function createDivFrmData(jsonResponse) {
+		//var keyArr = Object.keys(jsonResponse);
+		console.log(jsonResponse.length)
+		for (var i = 0; i < jsonResponse.length; i++) {
+			createDiv(i);
+			//createDivTotalOI(i);
+			createOptionTable(i);
+			//createDivChangeOI(i);
+		}
+		addDataTotable(jsonResponse)
+		//var data=jsonResponse.optionModle;
+		//drawCallOI(jsonResponse);
+	}
+	
+	function createDiv(index) {
+		var x = document.createElement("DIV");
+		x.setAttribute("id", "sdDiv" + index);
+		//x.setAttribute("style", "height:850px; ");
+		//x.setAttribute("class", "col-xs-10 col-sm-10 col-md-10");
+		$("#mainTableDiv").append(x);
+		var y = document.createElement("hr");
+		$("#sdDiv" + index).append(y);
+	}
+	
+	function createDivTotalOI(index) {
+		var x = document.createElement("DIV");
+		x.setAttribute("id", "oidiv" + index);
+		x.setAttribute("style", "height:900px; margin-top: 5px");
+		//x.setAttribute("class", "col-xs-10 col-sm-10 col-md-10");
+		$("#totalOIDivMain").append(x);
+	
+		var x = document.createElement("DIV");
+		x.setAttribute("id", "totalOIDiv" + index);
+	
+		//x.setAttribute("class", "col-xs-10 col-sm-10 col-md-10");
+		$("#oidiv"+index).append(x);
+		
+		var xx = document.createElement("DIV");
+		xx.setAttribute("id", "changeOIDiv" + index);
+		$("#oidiv"+index).append(xx);
+		
+		var y = document.createElement("hr");
+		$("#changeOIDiv" + index).append(y);
+	}
+	
+	function drawCallOI(jsonResponse) {
+		
+		var keyArr = Object.keys(jsonResponse);
+		for (var i = 0; i < keyArr.length; i++) {
+		
+				var strikePrice = [];
+				var callOI = [];
+				var putOI = [];
+				var callChangeINoI = [];
+				var putChangeINoI = [];
+				var expiry = jsonResponse[i].expiry
+				var spot = jsonResponse[i].spot;
+				var lastDataUpdated = jsonResponse[i].lastDataUpdated;
+				//console.log(expiry);
+				//console.log(spot);
+				var optionModle = jsonResponse[i].optionModle;
+				for (var j = 0; j < optionModle.length; j++) {	
+					if (optionModle[j].strike_price < spot) {
+
+						//if (optionModle[j].p_change_oi != null && optionModle[j].p_change_oi >10000) {
+
+							strikePrice.push(optionModle[j].strike_price);
+							callOI.push(getLacks(optionModle[j].c_oi));
+							putOI.push(getLacks(optionModle[j].p_oi));
+							callChangeINoI.push(getLacks(optionModle[j].c_change_oi));
+							putChangeINoI.push(getLacks(optionModle[j].p_change_oi));
+						//}
+					} 
+					else {
+
+						//if (optionModle[j].c_change_oi != null && optionModle[j].c_change_oi> 10000) {
+
+							strikePrice.push(optionModle[j].strike_price);
+							callOI.push(getLacks(optionModle[j].c_oi));
+							putOI.push(getLacks(optionModle[j].p_oi));
+							callChangeINoI.push(getLacks(optionModle[j].c_change_oi));
+							putChangeINoI.push(getLacks(optionModle[j].p_change_oi));
+						//}
+					}
+
+				}
+				drawTotalOI('Total OI' ,'totalOIDiv'+i,strikePrice, callOI, putOI, expiry, lastDataUpdated)
+				drawTotalOI('Change in OI','changeOIDiv'+i,strikePrice, callChangeINoI, putChangeINoI, expiry, lastDataUpdated)
+		}
+	}
+	
+	function drawTotalOI(heading, containerID, strikePrice, callOI, putOI, expiry, lastDataUpdated) {
+
+		Highcharts.chart(containerID, {
+			chart : {
+				type : 'bar',
+				inverted : false
+			},
+			title : {
+				text : ''
+			},
+			subtitle : {
+				text : heading+ '   Expiry:' + expiry + " , DataUpdated " + lastDataUpdated
+			},
+			xAxis : {
+				categories : strikePrice
+			},
+			yAxis : {
+				title : {
+					text : 'Open Interest'
+				}
+			},
+			plotOptions : {
+				bar : {
+					dataLabels : {
+						enabled : true
+					},
+					enableMouseTracking : true
+				}
+
+			},
+			series : [ {
+				name : 'CALL',
+				data : callOI
+			}, {
+				name : 'PUT',
+				data : putOI
+			} ]
+		});
+	}
+	
+	function addDataTotable(data){
+		
+		
+		for (var i = 0; i < data.length; i++) {
+			
+			var oc = data[i].datums;
+			console.log(data[i]);
+			for (var j = 0; j < oc.length; j++) {
+				tr = $('<tr/>');
+				//console.log(oc[j].strikePrice );
+				//console.log(data[i].underlyingValue );
+				console.log(oc[j].CE.openInterest);
+				if(data[i].underlyingValue > oc[j].strikePrice ){
+					tr.append("<td class=itm>" + oc[j].CE.openInterest + "</td>");
+					tr.append("<td class=itm>" + oc[j].CE.changeinOpenInterest + "</td>");
+					tr.append("<td class=itm>" + oc[j].CE.totalTradedVolume + "</td>");
+					tr.append("<td class=itm>" + oc[j].CE.impliedVolatility + "</td>");
+					tr.append("<td class=itm>" + oc[j].CE.lastPrice + "</td>");
+					tr.append("<td class=itmStrike>" + oc[j].CE.strikePrice + "</td>");
+				}else{
+					tr.append("<td class=otm>" + oc[j].CE.openInterest + "</td>");
+					tr.append("<td class=otm>" + oc[j].CE.changeinOpenInterest + "</td>");
+					tr.append("<td class=otm>" + oc[j].CE.totalTradedVolume + "</td>");
+					tr.append("<td class=otm>" + oc[j].CE.impliedVolatility + "</td>");
+					tr.append("<td class=otm>" + oc[j].CE.lastPrice + "</td>");
+					tr.append("<td class=otmStrike>" + oc[j].CE.strikePrice + "</td>");
+				}
+				if(data[i].underlyingValue < oc[j].strikePrice ){
+					tr.append("<td class=itm>" + oc[j].PE.lastPrice + "</td>");
+					tr.append("<td class=itm>" + oc[j].PE.impliedVolatility + "</td>");
+					tr.append("<td class=itm>" + oc[j].PE.totalTradedVolume + "</td>");
+					tr.append("<td class=itm>" + oc[j].PE.changeinOpenInterest + "</td>");
+					tr.append("<td class=itm>" + oc[j].PE.openInterest + "</td>");
+			
+				}else{
+					tr.append("<td class=otm>" + oc[j].PE.lastPrice + "</td>");
+					tr.append("<td class=otm>" + oc[j].PE.impliedVolatility + "</td>");
+					tr.append("<td class=otm>" + oc[j].PE.totalTradedVolume + "</td>");
+					tr.append("<td class=otm>" + oc[j].PE.changeinOpenInterest + "</td>");
+					tr.append("<td class=otm>" + oc[j].PE.openInterest + "</td>");
+					
+				}
+				
+				$('#sdTable'+i).append(tr);
+			}
+			
+			tr = $('<tr/>');
+			tr.append("<td class=highLightRow title=Total  colspan=9>" + "Total"+ "</td>");
+			
+			$('#sdTable'+i).append(tr);
+			
+			//header
+			
+			var table = document.getElementById('sdTable'+i);
+			var header = table.createTHead();
+			
+			var row = header.insertRow(0);
+			row.setAttribute("class", "optionHead");
+			
+			
+	
+			var cell = row.insertCell(0);
+			cell.setAttribute("colspan", 12);
+			cell.innerHTML = "<b> Expiry :  " + data[i].expiryDate + "  &nbsp;&nbsp;&nbsp;&nbsp; " + data[i].timestamp+"  &nbsp;&nbsp; "+  data[i].symbole +"  &nbsp; : "+ data[i].underlyingValue + "</b>";
+		}
+		
+		
+	}
+	
+	function createOptionTable(index) {
+	var x = document.createElement("TABLE");
+	x.setAttribute("id", "sdTable"+index);
+	x.setAttribute("class", "opttbldata");
+	//x.setAttribute("border", "0");
+	x.setAttribute("align", "center");
+	x.setAttribute("cellpadding", "4");
+	x.setAttribute("cellspacing", "1");
+	//x.setAttribute("class", "table");
+	x.setAttribute("width", "95%");
+
+	$("#sdDiv" + index).append(x);
+
+	// table header
+	$("#sdTable" + index)
+			.append(
+					'<thead>'
+							+ '<tr class="optionHead"><th colspan="5" >CALLS</th><th>&nbsp;</th><th colspan="6" >PUTS</th></tr>'
+							+
+
+							'<tr class="optionHead">'
+					
+							+ '<th title="Open Interest">OI</th> <th title="Change OI"> Change in OI</th>'
+							+ '<th title="No. of Contracts traded">Volume</th>'
+							+ '<th title="IV">IV</th>  <th title="Last Traded Price">LTP</th> <th title="Strike Price">Strike Price</th>'
+							+ '<th title="Last Traded Price">LTP</th> <th title="IV">IV</th> <th title="No. of Contracts traded">Volume</th>'
+							+ '<th title="Change OI"> Change in OI</th><th title="Open Interest">OI</th>'
+							
+							+ '</tr>' + '</thead>');
+
+	// table Fotter 
+	$("#optionchain")
+			.append(
+					'<tfoot><tr class="optionHead"> '
+							+ '<td><b></b></td>  <td ><b></b></td> <td ><b></b></td> <td id="ce_oi_total" ><b></b></td> <td colspan="9"></td>'
+							+ '<td id="pe_oi_total" ><b></b></td> <td><b></b></td>  <td ><b></b></td> <td ><b></b></td>'
+							+ '</tr></tfoot>');
+}
+
+function getLacks(num) {
+		return parseFloat((num / 100000).toFixed(2));
+	}
+</script>
+
+</html>

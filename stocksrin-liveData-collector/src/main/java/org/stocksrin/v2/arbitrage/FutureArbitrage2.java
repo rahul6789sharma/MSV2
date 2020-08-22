@@ -42,13 +42,13 @@ public class FutureArbitrage2 {
 					double targetAbrPercentage = 0.005;
 					if (metadata.getExpiryDate().contains(DateUtils.getNextMonth(0))) {
 						System.out.println("diff: " + diff);
-						targetAbrPercentage = 0.005;
+						targetAbrPercentage = 0.01;
 						System.out.println("current month Expiry " + metadata.getExpiryDate());
 						EntityABR entity = Data.currentMonthABR.get(symbole);
 						updateData(future, stock, entity, targetAbrPercentage);
 					} else if (metadata.getExpiryDate().contains(DateUtils.getNextMonth(1))) {
 						System.out.println("diff: " + diff);
-						targetAbrPercentage = 0.01;
+						targetAbrPercentage = 0.02;
 						System.out.println("Next month Expiry " + metadata.getExpiryDate());
 						EntityABR entity = Data.nextMonthABR.get(symbole);
 						updateData(future, stock, entity, targetAbrPercentage);

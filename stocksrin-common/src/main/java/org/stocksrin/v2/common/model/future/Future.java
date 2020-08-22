@@ -206,4 +206,5 @@ public class Future {
 				.append(additionalProperties, rhs.additionalProperties).isEquals();
 	}
 
+	
 }

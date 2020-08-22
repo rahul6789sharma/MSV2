@@ -19,8 +19,8 @@ public class JsonToPojo {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		String packageName = "org.stocksrin.v2.common.model.future";
-		File inputJson = new File("C:\\Users\\sharmarah\\Desktop\\Loan\\future.json");
+		String packageName = "org.stocksrin.v2.cash";
+		File inputJson = new File("C:\\Users\\rahul\\Desktop\\stocks.json");
 		File outputPojoDirectory = new File("." + File.separator + "convertedPojo");
 		outputPojoDirectory.mkdirs();
 		try {

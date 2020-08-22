@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.stocksrin.common.model.option.OptionType;
+import org.stocksrin.v2.common.model.option.IntraDayOptionModel;
 import org.stocksrin.v2.common.model.option.OptionModel;
 import org.stocksrin.v2.data.Data;
 
@@ -52,8 +53,8 @@ public class NiftyRestController {
 	}
 
 	@RequestMapping("/intraDayData")
-	public ResponseEntity<List<OptionModel>> getIntraDayData() {
-		List<OptionModel> data = Data.niftyIntraDay;
+	public ResponseEntity<List<IntraDayOptionModel>> getIntraDayData() {
+		List<IntraDayOptionModel> data = Data.niftyIntraDay;
 		if (!data.isEmpty()) {
 			return ResponseEntity.ok(data);
 		} else {

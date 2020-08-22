@@ -148,29 +148,7 @@ public class ExpiryDatesUtils {
 
 	}
 
-	private static void weeklyDirCreate() {
-
-		System.out.println("Creating Next Weekly");
-		FileUtils.makeDir(AppConstant.STOCKSRIN_OPTION_CHAIN_NIFTY + getNextWeekExpiry(expiries));
-		String file = AppConstant.STOCKSRIN_OPTION_CHAIN_NIFTY + getNextWeekExpiry(expiries) + File.separator
-				+ "WeeklyNifty.csv";
-		if (FileUtils.makeFile(file)) {
-			FileUtils.appendData(columne, file);
-		}
-
-	}
-
-	private static void monthlyDirCreate() {
-
-		FileUtils.makeDir(AppConstant.STOCKSRIN_OPTION_CHAIN_NIFTY + getNextMonthlyExpiry(expiries));
-		String file = AppConstant.STOCKSRIN_OPTION_CHAIN_NIFTY + getNextMonthlyExpiry(expiries) + File.separator
-				+ "MonthlyNifty.csv";
-		if (FileUtils.makeFile(file)) {
-			FileUtils.appendData(columne, file);
-		}
-
-	}
-
+	
 	private static String getNextWeekExpiry(List<String> expires) {
 		return expires.get(1);
 	}
