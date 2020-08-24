@@ -16,6 +16,7 @@ public class MaxPainData {
     // store last 5 value of maxpain
     // dateTime and its maxPain
     //public static LinkedHashMap<String, Integer> maxPain = new LinkedHashMap<>();
+    public static String expiry = null;
     private static SortedMap<Date, Integer> maxPain = new TreeMap<>(new DateComparator());
 
     private static ObservableMap<Date, Integer> observableMap = FXCollections.observableMap(maxPain);
@@ -27,7 +28,7 @@ public class MaxPainData {
 
                 if (change.wasAdded()) {
                     System.out.println("********** value changed ******** Added");
-                    String message = TelegramMessageBuilder.buid(maxPain, "20Aug");
+                    String message = TelegramMessageBuilder.buid(maxPain, expiry);
                     TelegramNotifactionUtils.sendNotifcation(message);
 
                 } else if (change.wasRemoved()) {
@@ -38,7 +39,7 @@ public class MaxPainData {
     }
 
     public static void put(Date timeStamp, Integer maxPainValue) {
-        System.out.println(maxPain);
+        //System.out.println(maxPain);
 
         boolean status = putIfLAstMaxPainChanged(timeStamp, maxPainValue);
 

@@ -19,11 +19,11 @@ public class RestClient {
     public static void main(String[] args) {
         System.out.println(getRandom());
     }
-    public Integer getMonthlyMaxPain(String symbole) {
+    public MaxPainResponse getMonthlyMaxPain(String symbole) {
         String uri = this.env.getProperty("microservice.liveData.url");
         uri = String.valueOf(uri) + "/niftydata/monthlyMaxPain";
         MaxPainResponse result = (MaxPainResponse) restTemplate.getForObject(uri, MaxPainResponse.class, new Object[0]);
-        return result.getMaxPain();
+        return result;
     }
     public static int getRandom() {
         List<Integer> givenList = Arrays.asList(12000, 12100, 12200);

@@ -4,7 +4,7 @@ import java.io.File;
 
 public class AppConstant {
 
-	public static final boolean TEST = true;
+	public static final boolean TEST = false;
 
 	public static String FUTSTK = "FUTSTK";
 	public static String FUTIDX = "FUTIDX";

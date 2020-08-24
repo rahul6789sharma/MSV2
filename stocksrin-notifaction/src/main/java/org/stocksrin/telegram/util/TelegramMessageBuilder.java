@@ -43,6 +43,8 @@ public class TelegramMessageBuilder {
         response.append(NewLine);
         //response.append("Updated Time : ")
         response.append(seprator);
+        response.append(NewLine);
+        response.append("Beta Version");
         System.out.println(response);
         return response.toString();
 
