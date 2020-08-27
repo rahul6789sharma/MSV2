@@ -3,9 +3,13 @@ package org.stocksrin.telegram.controller;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.stocksrin.telegram.util.MaxPainData;
+
+import java.util.Date;
+import java.util.SortedMap;
 
 @RestController
-@RequestMapping("/strategiesBuilder")
+@RequestMapping("/maxpain")
 public class Controller {
 
     // Define the log object for this class
@@ -14,11 +18,10 @@ public class Controller {
     @Value("${logging.file}")
     private String name;
 
-    // http://13.234.37.254:8088/strategiesBuilder/strategiesIntraDay
-    @RequestMapping("/hello")
-    public String sayHello() {
-
-        return null;
+    // http://localhost:8081/maxpain/nifty
+    @RequestMapping("/nifty")
+    public SortedMap<Date, Integer> maxpain() {
+        return MaxPainData.getMonthlyMaxPain();
     }
 
 

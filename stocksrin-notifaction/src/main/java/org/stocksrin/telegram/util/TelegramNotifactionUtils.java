@@ -18,13 +18,12 @@ public class TelegramNotifactionUtils {
 
     }
 
-    public static void sendNotifcation(String messsage)  {
+    public static void sendNotifcation(String messsage, String chatId)  {
         try {
             String urlString = "https://api.telegram.org/bot%s/sendMessage?chat_id=%s&text=%s";
 
             String apiToken = "1305807183:AAEwlR391Donp64z8j0RDctZS0goT_7esio";
-            //String chatId = "-439206897";
-            String chatId = "@stocksrin";
+
             //String text = maxPainMessages();
 
             urlString = String.format(urlString, apiToken, chatId, messsage);

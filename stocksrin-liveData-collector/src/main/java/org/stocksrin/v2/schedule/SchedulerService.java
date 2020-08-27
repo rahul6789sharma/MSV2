@@ -33,7 +33,7 @@ public class SchedulerService {
 
 	@PostConstruct
 	public void init() {
-		log.info("################# SchedulerService started #################");
+		log.info("################# SchedulerService started ################# ");
 		try {
 			// new boz we nned new instance daily
 			Scheduler.scheduleTask(9, 17, new OptionChainPriceRetrivalTask(false));
@@ -43,7 +43,7 @@ public class SchedulerService {
 
 		try {
 			// new boz we nned new instance daily
-			Scheduler.scheduleTask(9, 25, optionChainDownloader);
+			//Scheduler.scheduleTask(9, 25, optionChainDownloader);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

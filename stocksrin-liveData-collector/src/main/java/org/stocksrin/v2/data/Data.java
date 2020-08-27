@@ -64,9 +64,11 @@ public class Data {
     }
 
     public static Integer gerNiftyMaxPain(String expiry) {
-        OptionModel data = niftyData.get(expiry);
-        if (data != null) {
-			return data.getMaxPain();
+        if (expiry != null) {
+            OptionModel data = niftyData.get(expiry);
+            if (data != null) {
+                return data.getMaxPain();
+            }
         }
         return null;
     }

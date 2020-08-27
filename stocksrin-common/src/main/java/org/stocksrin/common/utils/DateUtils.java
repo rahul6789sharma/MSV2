@@ -12,7 +12,7 @@ public class DateUtils {
 	public static void main(String[] args) {
 		try {
 
-			System.out.println(getCurrentDay());
+			System.out.println(getTodayDateTime());
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -27,9 +27,19 @@ public class DateUtils {
 		return TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
 	}
 
+	public static String getTodayDateTime() {
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy HH:mm:ss");
+		sdf.setTimeZone(TimeZone.getTimeZone("IST"));
+		String dateStr = sdf.format(date).toUpperCase();
+		// 02May2017
+		return dateStr;
+	}
+
 	public static String getTodayDate() {
 		Date date = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("ddMMMyyyy");
+		sdf.setTimeZone(TimeZone.getTimeZone("IST"));
 		String dateStr = sdf.format(date).toUpperCase();
 		// 02May2017
 		return dateStr;
@@ -44,6 +54,7 @@ public class DateUtils {
 
 	public static String getCurrentDay() {
 		SimpleDateFormat format = new SimpleDateFormat("EEE");
+		format.setTimeZone(TimeZone.getTimeZone("IST"));
 		Calendar cal = Calendar.getInstance();
 		cal.add(2, 0);
 		return format.format(cal.getTime()).toUpperCase();

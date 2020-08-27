@@ -43,6 +43,7 @@ public class OptionChainPriceRetrivalTask extends TimerTask {
     @Override
     public void run() {
         try {
+            log.info("Starting option Chain Retrival Service... " + DateUtils.getTodayDateTime());
             if (!DateUtils.isWeekEndDay() && !NSEHolidayUtils.isHoliday()) {
                 if (!isForEveningDownLoad) {
                     Data.clean();
@@ -52,12 +53,12 @@ public class OptionChainPriceRetrivalTask extends TimerTask {
                 };
                 new Thread(task5min).start();
 
-				Runnable task5min2 = () -> {
-					startTask(timeInteval5min, "BANKNIFTY");
-				};
-				new Thread(task5min2).start();
+                Runnable task5min2 = () -> {
+                    startTask(timeInteval5min, "BANKNIFTY");
+                };
+                new Thread(task5min2).start();
             } else {
-                log.info("its off today");
+                log.info(" its off today ");
                 if (NSEHolidayUtils.isHoliday()) {
                     SendEmail.sentMail("Market is closed Today", "Take rest", "Live Data Collector");
                 }
@@ -103,7 +104,7 @@ public class OptionChainPriceRetrivalTask extends TimerTask {
     }
 
     public void optionpriceretrivalTask(String symbole, Map<String, Double> futurePrice) {
-        log.info("NSE Data Retrival Start...");
+        log.info(symbole + " Data Retriving..." + DateUtils.getTodayDateTime());
         String url = AppConstant.OPTION_BASE_URL_V2 + symbole;
 
         HttpHeaders headers = new HttpHeaders();
@@ -122,7 +123,7 @@ public class OptionChainPriceRetrivalTask extends TimerTask {
         ResponseEntity<NSEOptionChainData> response = restTemplate.exchange(url, HttpMethod.GET, request,
                 NSEOptionChainData.class, 1);
         // ResponseEntity<String> result = restTemplate.getForEntity(url, String.class);
-         //log.info(response.getStatusCode().toString());
+        log.info("status code " + response.getStatusCode().toString());
 
         if (symbole.equalsIgnoreCase("NIFTY")) {
             Map<String, OptionModel> data = convert(symbole, response.getBody(), futurePrice);
@@ -136,12 +137,16 @@ public class OptionChainPriceRetrivalTask extends TimerTask {
             List<String> expiry = getExpiryList(response.getBody());
             Data.updateExpiry(expiry);
             filter(data.get(expiry.get(0)));
-            //log.info(data.get(expiry.get(0)).getSymbol() + " : " + data.get(expiry.get(0)).getUnderlyingValue());
+            if (!expiry.isEmpty()) {
+                log.info(data.get(expiry.get(0)).getSymbol() + " : " + data.get(expiry.get(0)).getUnderlyingValue() + ", at: " + data.get(expiry.get(0)).getTimestamp());
+            }
+
         } else if (symbole.equalsIgnoreCase("BANKNIFTY")) {
             Map<String, OptionModel> data = convert(symbole, response.getBody(), futurePrice);
             Data.updateBNFData(data);
-            //log.info(data.get(Data.shortedExpiry.get(0)).getSymbol() + ":"
-              //      + data.get(Data.shortedExpiry.get(0)).getUnderlyingValue());
+            if (!Data.shortedExpiry.isEmpty()) {
+                log.info(data.get(Data.shortedExpiry.get(0)).getSymbol() + ":" + data.get(Data.shortedExpiry.get(0)).getUnderlyingValue() + ", at " + data.get(Data.shortedExpiry.get(0)).getTimestamp());
+            }
         }
 
     }

@@ -23,7 +23,7 @@ public class NiftyRestController {
         return "NiftyRestController is UP";
     }
 
-    // http://13.127.27.204:8082/niftydata/spotPrice
+    // http://45.32.114.95:8082/niftydata/spotPrice
     @RequestMapping("/spotPrice")
     public ResponseEntity<Double> getSpotPrice() {
         return ResponseEntity.ok(Data.getNFSpot());
@@ -73,7 +73,6 @@ public class NiftyRestController {
     @RequestMapping("/monthlyMaxPain")
     public ResponseEntity<MaxPainResponse> getMaxPain() {
         List<String> expiry = Data.shortedExpiry;
-        System.out.println("Monthly Expiry " + expiry);
         String monthlyExpiry = ExpiryUtils.getCurrentMonthExpiry(expiry);
         Integer maxPain = Data.gerNiftyMaxPain(monthlyExpiry);
         if (maxPain != null) {
@@ -83,6 +82,18 @@ public class NiftyRestController {
         } else {
             return ResponseEntity.noContent().build();
         }
+    }
 
+    @RequestMapping("/weeklyMaxPain")
+    public ResponseEntity<MaxPainResponse> getWeeklyMaxPain() {
+        List<String> expiry = Data.shortedExpiry;
+        Integer maxPain = Data.gerNiftyMaxPain(expiry.get(0));
+        if (maxPain != null) {
+            MaxPainResponse maxPainResponse = new MaxPainResponse(expiry.get(0), maxPain);
+            maxPainResponse.setLastupdateTimeStamp(Data.getNiftyLastUpdatedTimestamp());
+            return ResponseEntity.ok(maxPainResponse);
+        } else {
+            return ResponseEntity.noContent().build();
+        }
     }
 }

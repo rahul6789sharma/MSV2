@@ -3,45 +3,68 @@ package org.stocksrin.telegram.util;
 import javafx.collections.FXCollections;
 import javafx.collections.MapChangeListener;
 import javafx.collections.ObservableMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.util.Comparator;
-import java.util.Date;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.*;
 
 public class MaxPainData {
 
     private static final int MAX_ENTRIES = 5;
-
+    private static final Logger log = LoggerFactory.getLogger(MaxPainData.class);
     // store last 5 value of maxpain
     // dateTime and its maxPain
     //public static LinkedHashMap<String, Integer> maxPain = new LinkedHashMap<>();
-    public static String expiry = null;
-    private static SortedMap<Date, Integer> maxPain = new TreeMap<>(new DateComparator());
 
-    private static ObservableMap<Date, Integer> observableMap = FXCollections.observableMap(maxPain);
+    //private  static String chatId = "-439206897";
+    private  static String chatId = "@stocksrin";
+
+    public static String monthlyExpiry = null;
+    public static SortedMap<Date, Integer> monthlyMaxPain = new TreeMap<>(new DateComparator());
+    public static ObservableMap<Date, Integer> monthlyObservableMap = FXCollections.observableMap(monthlyMaxPain);
+
+    public static String weeklyExpiry = null;
+    public static SortedMap<Date, Integer> weeklyMaxPain = new TreeMap<>(new DateComparator());
+    public static ObservableMap<Date, Integer> weeklyObservableMap = FXCollections.observableMap(weeklyMaxPain);
 
     static {
-        observableMap.addListener(new MapChangeListener<Date, Integer>() {
+        weeklyObservableMap.addListener(new MapChangeListener<Date, Integer>() {
             @Override
             public void onChanged(Change<? extends Date, ? extends Integer> change) {
 
                 if (change.wasAdded()) {
-                    System.out.println("********** value changed ******** Added");
-                    String message = TelegramMessageBuilder.buid(maxPain, expiry);
-                    TelegramNotifactionUtils.sendNotifcation(message);
+                    log.info("********** Weekly value changed ******** Added");
+                    String message = TelegramMessageBuilder.buid(weeklyMaxPain, weeklyExpiry);
+                    TelegramNotifactionUtils.sendNotifcation(message + " : Weekly", chatId);
 
                 } else if (change.wasRemoved()) {
-                    System.out.println("********** value changed ******** Removed");
+                    log.info("********** value changed ******** Removed");
                 }
             }
         });
     }
 
-    public static void put(Date timeStamp, Integer maxPainValue) {
+    static {
+        monthlyObservableMap.addListener(new MapChangeListener<Date, Integer>() {
+            @Override
+            public void onChanged(Change<? extends Date, ? extends Integer> change) {
+
+                if (change.wasAdded()) {
+                    log.info("********** Monthly value changed ******** Added");
+                    String message = TelegramMessageBuilder.buid(monthlyMaxPain, monthlyExpiry);
+                    TelegramNotifactionUtils.sendNotifcation(message +" : Monthy", chatId);
+
+                } else if (change.wasRemoved()) {
+                    log.info("********** value changed ******** Removed");
+                }
+            }
+        });
+    }
+
+    public static void put(Date timeStamp, Integer maxPainValue, SortedMap<Date, Integer> maxPain, ObservableMap<Date, Integer> observableMap) {
         //System.out.println(maxPain);
 
-        boolean status = putIfLAstMaxPainChanged(timeStamp, maxPainValue);
+        boolean status = putIfLAstMaxPainChanged(timeStamp, maxPainValue , maxPain, observableMap);
 
         if (maxPain.size() >= MAX_ENTRIES) {
             System.out.println(" Max Entries Reached ");
@@ -56,7 +79,7 @@ public class MaxPainData {
 
     }
 
-    private static boolean putIfLAstMaxPainChanged(Date timeStamp, Integer maxPainValue) {
+    private static boolean putIfLAstMaxPainChanged(Date timeStamp, Integer maxPainValue, SortedMap<Date, Integer> maxPain, ObservableMap<Date, Integer> observableMap) {
         boolean status = false;
         if (maxPain.isEmpty()) {
             observableMap.put(timeStamp, maxPainValue);
@@ -72,14 +95,12 @@ public class MaxPainData {
         return status;
     }
 
+    public static SortedMap<Date, Integer> getMonthlyMaxPain() {
+        return monthlyMaxPain;
+    }
+
     public static void main(String[] args) throws Exception {
 
     }
 }
 
-class DateComparator implements Comparator<Date> {
-    @Override
-    public int compare(Date o1, Date o2) {
-        return o1.compareTo(o2);
-    }
-}

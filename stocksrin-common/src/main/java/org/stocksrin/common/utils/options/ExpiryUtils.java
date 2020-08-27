@@ -1,19 +1,17 @@
 package org.stocksrin.common.utils.options;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.SortedSet;
-import java.util.stream.Collectors;
-
-import org.stocksrin.common.model.Entry;
 import org.stocksrin.common.model.InstrumentType;
 import org.stocksrin.common.model.OptionChainOIData;
 import org.stocksrin.common.model.option.OptionModle;
 import org.stocksrin.common.model.option.OptionModles;
 import org.stocksrin.common.utils.DateUtils;
 import org.stocksrin.common.utils.FileUtils;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.SortedSet;
 
 public class ExpiryUtils {
 
@@ -31,9 +29,13 @@ public class ExpiryUtils {
 	}
 
 	public static String getCurrentMonthExpiry(List<String> expiries) {
-		String currentExpiryMonth = expiries.get(0).replaceAll("[^A-Za-z]", "");
-		long count = expiries.stream().filter(i -> i.contains(currentExpiryMonth)).count();
-		return expiries.get((int) count - 1);
+		if (!expiries.isEmpty()) {
+			String currentExpiryMonth = expiries.get(0).replaceAll("[^A-Za-z]", "");
+			long count = expiries.stream().filter(i -> i.contains(currentExpiryMonth)).count();
+			return expiries.get((int) count - 1);
+		} else {
+			return null;
+		}
 	}
 
 	public static String getNextMonthlyExpiry(List<String> expires) {
